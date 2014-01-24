@@ -11,9 +11,6 @@
   <c:param name="format" value="JSON"/>
 </c:url>
 
-
-<%-- CRITICAL use cookie login info --%>
-
 <script type="text/javascript">
   /*      <![CDATA[ */
 
