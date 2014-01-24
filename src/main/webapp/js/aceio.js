@@ -3,6 +3,10 @@
  */
 
 
+var guid;
+
+var workList = [];
+
 /***
  * Uses account info returned through a query to either the ace login, or
  * getloginfo web service calls.  Hides the login, or prints an error.
@@ -52,3 +56,11 @@ function aceIOError(page, status, jqXHR)
             'Please use ace project directly, and try again later.</p> ' +
             '</div>');
 }
+
+jQuery(document).ready(function ()
+{
+    jQuery(document).ajaxStop(function ()
+    {
+        log('work list: %o', workList);
+    });
+});

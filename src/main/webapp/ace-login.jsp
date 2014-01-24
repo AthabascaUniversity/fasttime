@@ -25,9 +25,6 @@
 
 <script type="text/javascript">
   /*      <![CDATA[ */
-  var guid;
-
-  var workList = [];
 
   (function ($)
   {
@@ -87,7 +84,6 @@
   {
     for (i = 0; i < workWeek.results.length; i++)
     {
-      log('work item: %o', workWeek.results[i]);
       jQuery.ajax({
         url: '${aceGetWorkItems}',
         type: 'get',
@@ -120,7 +116,6 @@
             };
             workList.push(newWorkItem);
           }
-          log('work list: %o', workList);
         },
         error: function (page, status, jqXHR)
         {
@@ -139,7 +134,6 @@
       data: 'guid=' + guid,
       success: function (page, status, jqXHR)
       {
-        log('weeks %o', page);
         loadMyWorkItems(page);
       },
       error: function (page, status, jqXHR)
