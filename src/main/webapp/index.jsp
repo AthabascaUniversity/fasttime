@@ -21,6 +21,8 @@
           src="http://code.jquery.com/jquery-2.0.3.js"></script>
   <script type="text/javascript"
           src="<c:url value="/js/common.js"/>"></script>
+  <script type="text/javascript"
+          src="<c:url value="/js/aceio.js"/>"></script>
 </head>
 
 <body class="fl-theme-iphone">
