@@ -47,6 +47,7 @@ function aceLogin(page, status, jqXHR)
         document.cookie =
                 "fasttime=" + loginInfo.GUID + "; path=/fasttime";
         jQuery('#login').hide();
+        guid = loginInfo.GUID;
         loadMyWeeks();
     }
     else
