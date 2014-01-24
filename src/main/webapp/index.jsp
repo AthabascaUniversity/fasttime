@@ -1,5 +1,8 @@
 <%@ taglib prefix="ht" tagdir="/WEB-INF/tags/ht" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+  response.setHeader("Access-Control-Allow-Origin", "*");
+%>
 <%@ page isELIgnored="false" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -32,32 +35,32 @@
         <h1 id="app-name" class="fl-table-cell">Fast Time for Ace Project</h1>
       </div>
       <div id="content" class="fl-screenNavigator-scroll-container">
+        <div>
         <jsp:include page="login.jsp"/>
         <jsp:include page="sidebar.jsp"/>
-      </div>
-      <div id="footer"
-           class="fl-panel fl-note fl-bevel-white fl-font-size-80">
+        </div>
+        <div id="footer"
+             class="fl-panel fl-note fl-bevel-white fl-font-size-80">
 
 
-        <div id="copyright">
-          <p>AU, Canada's <strong>OPEN UNIVERSITY</strong>, is an
-            internationally
-            recognized leader in online and distance learning.</p>
+          <div id="copyright">
+            <p>AU, Canada's <strong>Open University</strong>, is an
+              internationally recognized leader in online and distance
+              learning.</p>
 
-          <p><a href="http://www.athabascau.ca/contact">Contact AU</a> |
-            <a href="http://www.athabascau.ca/privacy">Privacy
-              Policy</a></p>
+            <p>
+              <a href="http://www.athabascau.ca/contact">Contact AU</a> |
+              <a href="http://www.athabascau.ca/privacy">Privacy Policy</a>
+            </p>
+          </div>
         </div>
       </div>
     </div>
   </div>
-  <script type="text/javascript"
+<%--  <script type="text/javascript"
           src="js/jquery.min.js"></script>
   <script type="text/javascript"
-          src="js/jquery-ui.min.js"></script>
-  <script type="text/javascript"
-          src="js/cas.js"></script>
-
+          src="js/jquery-ui.min.js"></script>--%>
 </div>
 </body>
 </html>

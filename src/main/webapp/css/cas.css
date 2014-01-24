@@ -98,7 +98,7 @@ body {
     background-color: #FFF;
 }
 
-#cas #header #company-name {
+#company-name {
     width: 165px;
     height: 63px;
     text-indent: -999em;
@@ -126,7 +126,6 @@ body {
 /*Content */
 
 #cas {
-    width: 70em;
     margin: 0 auto;
 }
 
@@ -215,7 +214,7 @@ body {
     border-top: .6em solid #3b708f;
     border-bottom: .6em solid #b8c8d2;
     float: right;
-    width: 42em;
+    width: 15em;
     padding: 2em 0em;
     color: #494949;
     margin-bottom: 1.7em;
@@ -492,4 +491,8 @@ table.border th {
 
 .odd {
     background-color: #EFEFEF;
+}
+
+.fr-label {
+    float: right;
 }
