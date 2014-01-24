@@ -71,4 +71,14 @@
       </plugin>
     </plugins>
   </build>
+
+  <profiles>
+    <profile>
+      <id>login-dev</id>
+      <properties>
+        <tomcat.server>login-dev</tomcat.server>
+        <tomcat.manager.url>https://login-dev.athabascau.ca/manager/</tomcat.manager.url>
+      </properties>
+    </profile>
+  </profiles>
 </project>

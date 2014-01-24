@@ -44,6 +44,7 @@ function aceLogin(page, status, jqXHR)
 function aceIOError(page, status, jqXHR)
 {
     log('error: %o, %o', page, jqXHR);
+    jQuery('#login').show();
     jQuery('#msg').replaceWith('' +
       '<div id="msg" class="errors" style="background-color: rgb(255, 238, 221);">' +
       '<p>An error occurred communicating with ace project.  ' +

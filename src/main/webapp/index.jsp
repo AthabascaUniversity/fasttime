@@ -8,6 +8,8 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 
+<c:set var="protocol" value="<%=request.getProtocol()%>"/>
+
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <title>Fast Time for Ace Project</title>
@@ -15,10 +17,10 @@
         href="css/cas.css">
 
   <link rel="shortcut icon"
-        href="http://www.athabascau.ca/globalIncludes/core/assets/ico/favicon.ico"
+        href="${protocol}://www.athabascau.ca/globalIncludes/core/assets/ico/favicon.ico"
         type="image/x-icon">
   <script type="text/javascript"
-          src="http://code.jquery.com/jquery-2.0.3.js"></script>
+          src="<c:url value="/js/jquery-2.0.3.js"/>"></script>
   <script type="text/javascript"
           src="<c:url value="/js/common.js"/>"></script>
   <script type="text/javascript"

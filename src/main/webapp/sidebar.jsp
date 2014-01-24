@@ -1,12 +1,17 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="guid" value="${cookie.fasttime.value}"/>
+<c:url var="aceSite" value="https://athabascau.aceproject.com">
+  <c:param name="guid" value="${guid}"/>
+</c:url>
+<c:url var="aceLogout" value="https://athabascau.aceproject.com/Logout.asp"/>
 <div id="sidebar">
   <div class="sidebar-content">
     <div id="identity">
     </div>
     <div id="news">
       <ul>
-        <li>
-          <a
-            href="https://athabascau.aceproject.com">Ace Project Site</a></li>
+        <li><a href="${aceLogout}">Logout</a></li>
+        <li><a href="${aceSite}">Ace Project Site</a></li>
         <li><a href="http://www.athabascau.ca/contact">Contact
           us</a></li>
       </ul>

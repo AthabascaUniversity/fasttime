@@ -19,6 +19,7 @@
     $(document).ready(function ()
     {
 
+      // Check for existing login
       var guid = getCookie("fasttime");
       log("Ace GUID: %s", guid);
       if (guid !== undefined && guid.length == 36)
@@ -39,6 +40,7 @@
         });
       }
 
+      // Register login form button clicks for submitting the data through ajax.
       $('#login-submit').unbind('click.login').bind('click.login',
         function (event)
         {
