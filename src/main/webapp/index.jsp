@@ -40,8 +40,18 @@
       </div>
       <div id="content" class="fl-screenNavigator-scroll-container">
         <div>
-        <jsp:include page="login.jsp"/>
-        <jsp:include page="sidebar.jsp"/>
+          <jsp:include page="login.jsp"/>
+          <jsp:include page="sidebar.jsp"/>
+        </div>
+        <div style="display: none;" id="work">
+          <table class="debugtable border" id="time">
+            <tr>
+              <th>Status</th>
+              <th>Project</th>
+              <th>Task</th>
+              <th>Work</th>
+            </tr>
+          </table>
         </div>
         <div id="footer"
              class="fl-panel fl-note fl-bevel-white fl-font-size-80">
@@ -61,10 +71,10 @@
       </div>
     </div>
   </div>
-<%--  <script type="text/javascript"
-          src="js/jquery.min.js"></script>
-  <script type="text/javascript"
-          src="js/jquery-ui.min.js"></script>--%>
+  <%--  <script type="text/javascript"
+            src="js/jquery.min.js"></script>
+    <script type="text/javascript"
+            src="js/jquery-ui.min.js"></script>--%>
 </div>
 </body>
 </html>

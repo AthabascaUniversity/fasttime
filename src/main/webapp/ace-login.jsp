@@ -92,6 +92,7 @@
         dataType: 'json',
         data: 'guid=' + guid + '&timeperiodid=' +
           workWeek.results[i].TIMESHEET_PERIOD_ID,
+        workListGenerator: true,
         success: function (page, status, jqXHR)
         {
           for (i = 0; i < page.results.length; i++)
@@ -140,6 +141,7 @@
       success: function (page, status, jqXHR)
       {
         log('my weeks: %o', page);
+        workList = [];
         loadMyWorkItems(page);
       },
       error: function (page, status, jqXHR)
