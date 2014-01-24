@@ -51,7 +51,7 @@ hr { display: block; height: 1px; border: 0; border-top: 1px solid #cccccc; marg
 input, select { vertical-align: middle; }
 
 /* general page */
-body { font-family: Arial, Verdana, sans-serif; font-size: .9em; line-height: 1.4em; background: #efeff0 url('../images/rebrand/background.jpg') repeat-x left top; }
+body { font-family: Arial, Verdana, sans-serif; font-size: .9em; line-height: 1.4em; background: #efeff0 url('../images/background.jpg') repeat-x left top; }
 
 
 
@@ -60,9 +60,9 @@ body { font-family: Arial, Verdana, sans-serif; font-size: .9em; line-height: 1.
 
 /*Header*/
 #cas #header { padding-top: 10px; margin-bottom: 3em; background-color: #FFF; }
-#cas #header #company-name { width: 165px; height: 63px; text-indent: -999em; background: url(../images/rebrand/au-logo.jpg) no-repeat; margin: 1.1em 0 1.5em 0.9em; }
+#cas #header #company-name { width: 165px; height: 63px; text-indent: -999em; background: url(../images/au-logo.jpg) no-repeat; margin: 1.1em 0 1.5em 0.9em; }
 #cas #header #app-name { 
-    background: #1e4164 url('../images/rebrand/orange-arrow.jpg') no-repeat 50px center; 
+    background: #1e4164 url('../images/orange-arrow.jpg') no-repeat 50px center;
     color: white; 
     padding: 1em 3em; 
     font-size: 2em; 
@@ -99,7 +99,7 @@ body { font-family: Arial, Verdana, sans-serif; font-size: .9em; line-height: 1.
 }
 
 .errors {
-    background: #fdd2b5 url('../images/rebrand/login-alert.jpg') no-repeat .4em 1em;
+    background: #fdd2b5 url('../images/login-alert.jpg') no-repeat .4em 1em;
     border: 1px solid #f57421;
     color:#1e4164;
     padding: 1em 1em 1em 5em;
@@ -118,7 +118,7 @@ body { font-family: Arial, Verdana, sans-serif; font-size: .9em; line-height: 1.
     width: 40.3em;
 }
 
-#cas #content #login #fm1 { padding: 20px;background: transparent url('../images/rebrand/login-bg.jpg') repeat-y left top;}
+#cas #content #login #fm1 { padding: 20px;background: transparent url('../images/login-bg.jpg') repeat-y left top;}
 #fm1 h2 { color:#1e4164; font-size: 14px; text-transform: uppercase; font-weight: bold; margin-bottom: 1.5em }
 #cas #content #login #fm1 .row { margin-bottom: .8em; }
 #cas #content #login #fm1 .row .fl-label { color: #1e4164; font-size: 1em; }
@@ -166,7 +166,7 @@ body { font-family: Arial, Verdana, sans-serif; font-size: .9em; line-height: 1.
 }
 
 .sidebar-content ul li {
-    background: transparent url('../images/rebrand/blue-arrow.jpg') no-repeat left center;
+    background: transparent url('../images/blue-arrow.jpg') no-repeat left center;
     padding-left: 1.2em;
     margin-bottom: .4em;
     font-size: 1em;
@@ -210,7 +210,7 @@ body { font-family: Arial, Verdana, sans-serif; font-size: .9em; line-height: 1.
         border: 1em solid #FFF;
     }
     
-    #cas #content #login #fm1 { padding: 20px;background: transparent url('../images/rebrand/login-bg.jpg') repeat left top;}
+    #cas #content #login #fm1 { padding: 20px;background: transparent url('../images/login-bg.jpg') repeat left top;}
 
 
     #cas #content #login #fm1 .row input[type=submit] {
@@ -319,7 +319,7 @@ body { font-family: Arial, Verdana, sans-serif; font-size: .9em; line-height: 1.
         width: 90%;
     }
     
-    #cas #header #company-name { width: 165px; height: 63px; text-indent: -999em; background: url(../images/rebrand/mobile-logo.jpg) no-repeat; margin: 1.1em 0 1.5em 0.9em; }
+    #cas #header #company-name { width: 165px; height: 63px; text-indent: -999em; background: url(../images/mobile-logo.jpg) no-repeat; margin: 1.1em 0 1.5em 0.9em; }
 }
 
 
@@ -332,7 +332,7 @@ body { font-family: Arial, Verdana, sans-serif; font-size: .9em; line-height: 1.
         margin: 0 auto;
     }
     
-    #cas #header #company-name { width: 165px; height: 63px; text-indent: -999em; background: url(../images/rebrand/mobile-logo.jpg) no-repeat; margin: 1.1em 0 1.5em 0.9em; }
+    #cas #header #company-name { width: 165px; height: 63px; text-indent: -999em; background: url(../images/mobile-logo.jpg) no-repeat; margin: 1.1em 0 1.5em 0.9em; }
 
     
     #cas #header .slogan {
