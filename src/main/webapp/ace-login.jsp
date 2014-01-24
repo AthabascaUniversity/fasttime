@@ -30,7 +30,6 @@
   {
     $(document).ready(function ()
     {
-
       // Check for existing login
       guid = getCookie("fasttime");
       log("Ace GUID: %s", guid);
@@ -80,6 +79,9 @@
 
   }(jQuery));
 
+  /**
+   * Loads the in progress work list into workList global variable.
+   */
   function loadMyWorkItems(workWeek)
   {
     for (i = 0; i < workWeek.results.length; i++)
@@ -125,6 +127,9 @@
     }
   }
 
+  /**
+   * Loads the task items for each week.
+   */
   function loadMyWeeks()
   {
     jQuery.ajax({
@@ -134,6 +139,7 @@
       data: 'guid=' + guid,
       success: function (page, status, jqXHR)
       {
+        log('my weeks: %o', page);
         loadMyWorkItems(page);
       },
       error: function (page, status, jqXHR)
