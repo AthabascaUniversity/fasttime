@@ -37,8 +37,9 @@
               log('succes: %o', page);
               if ('ok' == page.status)
               {
+                loginInfo = page.results[0];
                 jQuery('#identity').replaceWith('<div id="identity">Welcome ' +
-                  page.results[0].FIRST_NAME + ' ' + page.results[0].LAST_NAME +
+                  loginInfo.FIRST_NAME + ' ' + loginInfo.LAST_NAME +
                   '</div>');
                 jQuery('#login').hide();
               }
@@ -52,7 +53,12 @@
             },
             error: function (page, status, jqXHR)
             {
-              alert('error');
+              log('error: %o, %o', page, jqXHR);
+              jQuery('#msg').replaceWith('' +
+                '<div id="msg" class="errors" style="background-color: rgb(255, 238, 221);">' +
+                '<p>An error occurred communicating with ace project.  ' +
+                'Please use ace project directly, and try again later.</p> ' +
+              '</div>');
             }
           });
           event.preventDefault();
