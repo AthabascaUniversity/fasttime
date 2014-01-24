@@ -1,4 +1,7 @@
 <%@ taglib prefix="ht" tagdir="/WEB-INF/tags/ht" %>
+<ht:script type="text/javascript" jquery="true" ready="true">
+  log('started');
+</ht:script>
 <%--<ht:script type="text/javascript">
   jQuery('#login').click(
   function (event)

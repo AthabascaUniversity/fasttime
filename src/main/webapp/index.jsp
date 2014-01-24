@@ -1,4 +1,5 @@
 <%@ taglib prefix="ht" tagdir="/WEB-INF/tags/ht" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page isELIgnored="false" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -15,6 +16,8 @@
         type="image/x-icon">
   <script type="text/javascript"
           src="http://code.jquery.com/jquery-2.0.3.js"></script>
+  <script type="text/javascript"
+          src="<c:url value="/js/common.js"/>"></script>
 </head>
 
 <body class="fl-theme-iphone">
