@@ -23,6 +23,5 @@
       shutdown your browser after using AU web services,
       otherwise anyone with access to the browser could use
       your account.</p>
-
   </div>
 </div>
