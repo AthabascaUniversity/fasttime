@@ -7,12 +7,15 @@ var guid;
 
 var workList = [
     {
+        weekStart: new Date(),
         approvalStatus: '',
         approvalStatusName: '',
         project: '',
         projectName: '',
         taskId: '',
         taskName: '',
+        timeSheetLineId: '',
+        timeSheetPeriodId: '',
         work: {
             sun: '',
             mon: '',
@@ -56,6 +59,7 @@ function aceLogin(page, status, jqXHR)
                 '<div id="msg" class="errors" style="background-color: rgb(255, 238, 221);">' +
                 page.results[0].ERRORDESCRIPTION +
                 '</div>');
+        jQuery('#login').show();
     }
 }
 

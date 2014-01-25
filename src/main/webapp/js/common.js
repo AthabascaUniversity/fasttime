@@ -36,3 +36,92 @@ function getCookie(cname)
     }
     return "";
 }
+
+/**
+ * Centers an element.  The element will
+ * - always be to the right of or aligned to the left of #content
+ * - always be below or aligned to the top of #content
+ * - never exceed the width of #content
+ * - never exceed the height of #content
+ * @return {*}
+ */
+jQuery.fn.center = function ()
+{
+    this.css("position", "absolute");
+    var topCoord = (jQuery(window).height() - this.height()) / 2 +
+        jQuery(window).scrollTop();
+    var leftCoord = (jQuery(window).width() - this.width()) / 2 +
+        jQuery(window).scrollLeft();
+    log("top: %s, left: %s, %o", topCoord, leftCoord, this);
+
+    // make sure we're within the bounds of the content div.
+    if (topCoord < jQuery('body').offset().top)
+    {
+        topCoord = jQuery('body').offset().top;
+    }
+    if (leftCoord < jQuery('body').offset().left)
+    {
+        leftCoord = jQuery('body').offset().left;
+    }
+    this.css("top", topCoord + "px");
+    this.css("left", leftCoord + "px");
+
+    var maxWidth = jQuery('body').width();
+    var maxHeight = (jQuery(window).height() -
+        jQuery('body').offset().top) / 2;
+    this.adjustDimensions(maxWidth, maxHeight);
+
+    return this;
+};
+
+/**
+ * Adjust the maximum width and height of the element.
+ *
+ * @param maxWidth
+ * @param maxHeight
+ */
+jQuery.fn.adjustDimensions = function (maxWidth, maxHeight)
+{
+    log(" maxWidth: " + maxWidth + ", maxHeight: " +
+        maxHeight);
+    if (jQuery(this).width() > maxWidth)
+    {
+        log('reducing popup width from ' + jQuery(this).width() +
+            ' to ' + maxWidth);
+        jQuery(this).width(maxWidth);
+    }
+    if (jQuery(this).height() > maxHeight)
+    {
+        log('reducing popup height from ' +
+            jQuery(this).height() +
+            ' to ' + maxHeight);
+        jQuery(this).height(maxHeight);
+    }
+
+    return this;
+};
+
+jQuery(document).ready(function ()
+    {
+        loadingDiv = jQuery("div#loading");
+        loadingDiv.hide();
+        log('setup loading spinner');
+        loadingDiv.ajaxStart(function ()
+        {
+            log('begin ajaxStart ' + new Date().getTime());
+            jQuery(this).center();
+            /*            jQuery(this).fadeIn('slow', function () {
+             orosLog('oros - fadein complete ' + new Date().getTime());
+             });*/
+            jQuery(this).show();
+            log('end ajaxStart ' + new Date().getTime());
+        });
+        loadingDiv.ajaxStop(function (event, XMLHttpRequest, ajaxOptions)
+        {
+            log('begin ajaxStop ' + new Date().getTime());
+            jQuery(this).hide();
+            jQuery(this).stop();
+            log('end ajaxStop ' + new Date().getTime());
+        });
+    }
+);

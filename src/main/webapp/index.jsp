@@ -76,5 +76,14 @@
     <script type="text/javascript"
             src="js/jquery-ui.min.js"></script>--%>
 </div>
+
+<div id="loading" style="display: none;">
+  <p id="loading-message">
+    Processing...
+  </p>
+  <img alt="Loading animated GIF" src="<c:url value="/images/ajax-loader.gif"/>"
+       title="processing..."/>
+</div>
+
 </body>
 </html>

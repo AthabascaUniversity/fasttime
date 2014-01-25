@@ -496,3 +496,12 @@ table.border th {
 .fr-label {
     float: right;
 }
+
+#loading {
+    vertical-align: middle;
+    text-align: center;
+    padding: 0.5em;
+    background-color: #cfcfd0;
+    border: #ccc solid 1px;
+}
+

@@ -67,6 +67,7 @@
             success: function (page, status, jqXHR)
             {
               aceLogin(page, status, jqXHR);
+              location.reload();
             },
             error: function (page, status, jqXHR)
             {
@@ -99,13 +100,20 @@
           {
             var workItem = page.results[i];
             log('work item %o', workItem);
+            workWeekStart =
+              new Date(+/\/Date\((\d*)\)\//.exec(workItem.DATE_WEEK_START)[1] +
+                new Date().getTimezoneOffset() * 60 * 1000);
+            log('date: %s', workWeekStart);
             var newWorkItem = {
+              weekStart: workWeekStart,
               approvalStatus: workItem.APPROVAL_STATUS,
               approvalStatusName: workItem.APPROVAL_STATUS_NAME,
               project: workItem.PROJECT_ID,
               projectName: workItem.PROJECT_NAME,
               taskId: workItem.TASK_ID,
               taskName: workItem.TASK_RESUME,
+              timeSheetLineId: workItem.TIMESHEET_LINE_ID,
+              timeSheetPeriodId: workItem.TIMESHEET_PERIOD_ID,
               work: {
                 sun: workItem.TOTAL1,
                 mon: workItem.TOTAL2,
