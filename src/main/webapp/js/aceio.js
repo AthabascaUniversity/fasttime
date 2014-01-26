@@ -88,7 +88,7 @@ jQuery(document).ready(function ()
         log('work list: %o', workList);
         /* CRITICAL We could iterate through this list, to find a project and work
         * item that matches the time frame, and just add to it's hours for the
-         * day of the week. */
+         * day of the week, as well as the comment. */
         if (0 < workList.length)
         {
             jQuery('#work').show();
