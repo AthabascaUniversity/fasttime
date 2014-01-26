@@ -159,6 +159,8 @@
     });
   }
 
+  new Date(new Date().setFullYear('2014', '01', '27')).toISOString();
+  alert(myDate.getYear + '-' + myDate.getMonth());
 
   /*      ]]> */
 </script>
