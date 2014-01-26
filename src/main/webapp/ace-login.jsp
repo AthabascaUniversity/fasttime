@@ -125,7 +125,28 @@
                 total: workItem.TOTAL
               }
             };
-            workList.push(newWorkItem);
+
+            if (0 != newWorkItem.timeSheetLineId)
+            { // only *real* time items, not the predicted ones.
+              workList.push(newWorkItem);
+              workRow = '' +
+                '            <tr>' +
+                '            <td>' + newWorkItem.approvalStatusName +
+                '</td>' +
+                '            <td>' + newWorkItem.projectName + '</td>' +
+                '            <td>' + newWorkItem.taskName + '</td>';
+              workRow += '<td>'
+              workRow += newWorkItem.work.sun + '-';
+              workRow += newWorkItem.work.mon + '-';
+              workRow += newWorkItem.work.tue + '-';
+              workRow += newWorkItem.work.wed + '-';
+              workRow += newWorkItem.work.thu + '-';
+              workRow += newWorkItem.work.fri + '-';
+              workRow += newWorkItem.work.sat;
+              workRow += '</td>';
+              workRow += '            </tr>'
+              jQuery('#time').append(workRow);
+            }
           }
         },
         error: function (page, status, jqXHR)
@@ -159,8 +180,8 @@
     });
   }
 
-  new Date(new Date().setFullYear('2014', '01', '27')).toISOString();
-  alert(myDate.getYear + '-' + myDate.getMonth());
+  /*  new Date(new Date().setFullYear('2014', '01', '27'));
+   alert(myDate.getYear + '-' + myDate.getMonth());*/
 
   /*      ]]> */
 </script>
