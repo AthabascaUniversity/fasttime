@@ -1,5 +1,11 @@
-== Api Examples ==
+== Deploying ==
+To deploy to a local tomcat instance, you really only need to do one thing.
+You need to setup a server instance in settings.xml called '''localhost'''.
+It is assumed that you are running on http://localhost:8080, and that you have
+a tomcat manager installed.
 
+== Api Examples ==
+=== Services ===
 Initial login, returns login information
 http://localhost:8080/fasttime/proxy/?fct=getprojects&guid=123544dd-ee58-4924-9d9b-2bdf01379bb8&format=JSON
 
@@ -22,3 +28,15 @@ http://localhost:8080/fasttime/proxy/?fct=createweek&dateweekstart=
 
 http://localhost:8080/fasttime/proxy/proxy/?fct=getweeks&format=json
 
+=== Testing Calls ===
+If you need to test a call, just use chrome developers tools in your browser,
+firebug in firefox, or some other such developer system that lets you play
+with Javascript within your browser.
+
+We've created a test call function, which appends the current guid
+automatically so that you can get right to playing with the APIs.  When the
+call is made, the guid is appended, and the results are logged automatically.
+
+An example call is as follows...
+
+testCall('http://localhost:8080/fasttime/proxy/?fct=getweeks&format=json');
