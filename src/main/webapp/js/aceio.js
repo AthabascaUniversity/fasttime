@@ -113,3 +113,27 @@ jQuery(document).ready(function ()
         }
     });
 });
+
+/**
+ * Pass a url, and a test call is created, and the results logged.  guid is
+ * automatically appended.  This allows playing around in the chrome developer
+ * tools, or firebug.
+ */
+function testCall(queryUrl)
+{
+    jQuery.ajax({
+      url: queryUrl,
+      type: 'get',
+      dataType: 'json',
+      data: 'guid=' + guid,
+      success: function (page, status, jqXHR)
+      {
+          log('test result: ', page);
+      },
+      error: function (page, status, jqXHR)
+      {
+        aceIOError(page, status, jqXHR);
+      }
+    });
+
+}
