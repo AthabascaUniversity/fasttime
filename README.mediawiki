@@ -38,5 +38,4 @@ automatically so that you can get right to playing with the APIs.  When the
 call is made, the guid is appended, and the results are logged automatically.
 
 An example call is as follows...
-
-testCall('http://localhost:8080/fasttime/proxy/?fct=getweeks&format=json');
+ testCall('http://localhost:8080/fasttime/proxy/?fct=getweeks&format=json');
