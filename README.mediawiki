@@ -7,7 +7,7 @@ a tomcat manager installed.
 == Api Examples ==
 === Services ===
 Initial login, returns login information
-http://localhost:8080/fasttime/proxy/?fct=getprojects&guid=123544dd-ee58-4924-9d9b-2bdf01379bb8&format=JSON
+http://localhost:8080/fasttime/proxy/?fct=login&accountid=athabascau&username=username&password=blah&format=JSON
 
 Gets the projects based on the text to search on.  Remove that, and it will return all projects you have access to.
 http://localhost:8080/fasttime/proxy/?fct=getprojects&guid=123544dd-ee58-4924-9d9b-2bdf01379bb8&format=JSON&texttosearch=ASRP%20Technical%20Finance
@@ -16,7 +16,8 @@ Gets the tasks available for a specific project
 http://localhost:8080/fasttime/proxy/?fct=gettasks&guid=123544dd-ee58-4924-9d9b-2bdf01379bb8&format=JSON&projectid=2
 
 Creating a week is pretty simple, but you can't call this twice per week, as
-it will throw an error.
+it will throw an error.  Also keep in mind that if you go into ace project
+and delete all the time items from the week, the week id is discarded.
 http://localhost:8080/fasttime/proxy/?fct=createweek&dateweekstart=2014-01-27T09:11:05.998Z&format=JSON
 
 The following call will retrieve the week ID, based on the date.

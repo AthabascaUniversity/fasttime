@@ -129,7 +129,7 @@
             if (0 != newWorkItem.timeSheetLineId)
             { // only *real* time items, not the predicted ones.
               workList.push(newWorkItem);
-              workRow = '' +
+              var workRow = '' +
                 '            <tr>' +
                 '            <td>' + newWorkItem.approvalStatusName +
                 '</td>' +
