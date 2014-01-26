@@ -1,0 +1,24 @@
+== Api Examples ==
+
+Initial login, returns login information
+http://localhost:8080/?fct=getprojects&guid=123544dd-ee58-4924-9d9b-2bdf01379bb8&format=JSON
+
+Gets the projects based on the text to search on.  Remove that, and it will return all projects you have access to.
+http://localhost:8080/?fct=getprojects&guid=123544dd-ee58-4924-9d9b-2bdf01379bb8&format=JSON&texttosearch=ASRP%20Technical%20Finance
+
+Gets the tasks available for a specific project
+http://localhost:8080/?fct=gettasks&guid=123544dd-ee58-4924-9d9b-2bdf01379bb8&format=JSON&projectid=2
+
+For creating a week, but I don't think we need this, as they should theoretically already be auto-creating.
+http://localhost:8080/?fct=createweek&guid=e0525025-a85a-46f2-97e1-bfd71add5664&dateweekstart=
+
+http://localhost:8080/?fct=getweeks&guid=e0525025-a85a-46f2-97e1-bfd71add5664
+
+It seems that a call to SaveWorkItem is required to create single line as shown in the Ace Web Interface.  However, it would seem that creation of a TimePeriodId may be required first.
+http://localhost:8080/?fct=saveworkitem&taskid=647&projectid=48
+
+
+http://localhost:8080/?fct=createweek&dateweekstart=
+
+http://localhost:8080/proxy/?fct=getweeks&format=json
+
