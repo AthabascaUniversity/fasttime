@@ -50,6 +50,7 @@
               <th>Project</th>
               <th>Task</th>
               <th>Work</th>
+              <th>Notes</th>
             </tr>
           </table>
         </div>

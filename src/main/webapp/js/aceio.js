@@ -10,12 +10,23 @@ var guid;
 
 function getRowUrl(newWorkItem)
 {
-    var workRowUrl = './work-row.jsp?status=' +
+    var workRowUrl = './work-row.jsp?' +
+        'statusId=' +
+        encodeURI(newWorkItem.approvalStatusId) +
+        '&statusName=' +
         encodeURI(newWorkItem.approvalStatusName) +
-        '&project=' +
+        '&projectId=' +
+        encodeURI(newWorkItem.projectId) +
+        '&projectName=' +
         encodeURI(newWorkItem.projectName) +
-        '&task=' +
-        encodeURI(newWorkItem.taskName);
+        '&taskId=' +
+        encodeURI(newWorkItem.taskId) +
+        '&taskName=' +
+        encodeURI(newWorkItem.taskName) +
+        '&timeSheetLineId=' +
+        encodeURI(newWorkItem.timeSheetLineId) +
+        '&comment=' +
+        encodeURI(newWorkItem.comment);
 
     workRowUrl += '&sun=' + newWorkItem.work.sun;
     workRowUrl += '&mon=' + newWorkItem.work.mon;
@@ -78,14 +89,15 @@ var myWork = {
                         log('date: %s', workWeekStart);
                         var newWorkItem = {
                             weekStart: workWeekStart,
-                            approvalStatus: workItem.APPROVAL_STATUS,
+                            approvalStatusId: workItem.APPROVAL_STATUS,
                             approvalStatusName: workItem.APPROVAL_STATUS_NAME,
-                            project: workItem.PROJECT_ID,
+                            projectId: workItem.PROJECT_ID,
                             projectName: workItem.PROJECT_NAME,
                             taskId: workItem.TASK_ID,
                             taskName: workItem.TASK_RESUME,
                             timeSheetLineId: workItem.TIMESHEET_LINE_ID,
                             timeSheetPeriodId: workItem.TIMESHEET_PERIOD_ID,
+                            comment: workItem.COMMENT,
                             work: {
                                 sun: workItem.TOTAL1,
                                 mon: workItem.TOTAL2,
@@ -131,14 +143,15 @@ var myWork = {
         {
             weekStart: new Date(),
             weekEnd: new Date(),
-            approvalStatus: '',
+            approvalStatusId: '',
             approvalStatusName: '',
-            project: '',
+            projectId: '',
             projectName: '',
             taskId: '',
             taskName: '',
             timeSheetLineId: '',
             timeSheetPeriodId: '',
+            comment: '',
             work: {
                 sun: '',
                 mon: '',
@@ -258,6 +271,8 @@ jQuery(document).ready(function ()
                 success: function (page, status, jqXHR)
                 {
                     aceLogin(page, status, jqXHR);
+                    // first login gets a page reload to execute the
+                    // first guid based load
                     location.reload();
                 },
                 error: function (page, status, jqXHR)
