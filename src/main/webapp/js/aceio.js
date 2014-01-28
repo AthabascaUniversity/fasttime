@@ -8,6 +8,26 @@ var aceGetWorkItemsUrl;
 var aceLoginUrl;
 var guid;
 
+function getRowUrl(newWorkItem)
+{
+    var workRowUrl = './work-row.jsp?status=' +
+        encodeURI(newWorkItem.approvalStatusName) +
+        '&project=' +
+        encodeURI(newWorkItem.projectName) +
+        '&task=' +
+        encodeURI(newWorkItem.taskName);
+
+    workRowUrl += '&sun=' + newWorkItem.work.sun;
+    workRowUrl += '&mon=' + newWorkItem.work.mon;
+    workRowUrl += '&tue=' + newWorkItem.work.tue;
+    workRowUrl += '&wed=' + newWorkItem.work.wed;
+    workRowUrl += '&thu=' + newWorkItem.work.thu;
+    workRowUrl += '&fri=' + newWorkItem.work.fri;
+    workRowUrl += '&sat=' + newWorkItem.work.sat;
+
+    return workRowUrl;
+}
+
 var myWork = {
     /**
      * Loads the task items for each week.
@@ -43,7 +63,7 @@ var myWork = {
                 type: 'get',
                 dataType: 'json',
                 data: 'guid=' + guid + '&timeperiodid=' +
-                        workWeek.results[i].TIMESHEET_PERIOD_ID,
+                    workWeek.results[i].TIMESHEET_PERIOD_ID,
                 workListGenerator: true,
                 success: function (page, status, jqXHR)
                 {
@@ -52,9 +72,9 @@ var myWork = {
                         var workItem = page.results[i];
                         log('work item %o', workItem);
                         workWeekStart =
-                                new Date(+/\/Date\((\d*)\)\//.exec(workItem.DATE_WEEK_START)[1] +
-                                        new Date().getTimezoneOffset() * 60 *
-                                                1000);
+                            new Date(+/\/Date\((\d*)\)\//.exec(workItem.DATE_WEEK_START)[1] +
+                                new Date().getTimezoneOffset() * 60 *
+                                    1000);
                         log('date: %s', workWeekStart);
                         var newWorkItem = {
                             weekStart: workWeekStart,
@@ -81,27 +101,11 @@ var myWork = {
                         if (0 != newWorkItem.timeSheetLineId)
                         { // only *real* time items, not the predicted ones.
                             myWork.list.push(newWorkItem);
-                            var workRow = '' +
-                                    '            <tr>' +
-                                    '            <td>' +
-                                    newWorkItem.approvalStatusName +
-                                    '</td>' +
-                                    '            <td>' +
-                                    newWorkItem.projectName +
-                                    '</td>' +
-                                    '            <td>' + newWorkItem.taskName +
-                                    '</td>';
-                            workRow += '<td>'
-                            workRow += newWorkItem.work.sun + '-';
-                            workRow += newWorkItem.work.mon + '-';
-                            workRow += newWorkItem.work.tue + '-';
-                            workRow += newWorkItem.work.wed + '-';
-                            workRow += newWorkItem.work.thu + '-';
-                            workRow += newWorkItem.work.fri + '-';
-                            workRow += newWorkItem.work.sat;
-                            workRow += '</td>';
-                            workRow += '            </tr>'
-                            jQuery('#time').append(workRow);
+                            jQuery.ajax(
+                                {   // global ajaxSuccess handles append.
+                                    url: getRowUrl(newWorkItem),
+                                    appendElement: '#time'
+                                });
                         }
                     }
                 },
@@ -164,11 +168,11 @@ function aceLogin(page, status, jqXHR)
     {
         loginInfo = page.results[0];
         jQuery('#identity').replaceWith('' +
-                '<div id="identity">Welcome ' +
-                loginInfo.FIRST_NAME + ' ' + loginInfo.LAST_NAME +
-                '</div>');
+            '<div id="identity">Welcome ' +
+            loginInfo.FIRST_NAME + ' ' + loginInfo.LAST_NAME +
+            '</div>');
         document.cookie =
-                "fasttime=" + loginInfo.GUID + "; path=/fasttime";
+            "fasttime=" + loginInfo.GUID + "; path=/fasttime";
         jQuery('#login').hide();
         guid = loginInfo.GUID;
         myWork.loadWeeks();
@@ -176,9 +180,9 @@ function aceLogin(page, status, jqXHR)
     else
     {
         jQuery('#msg').replaceWith('' +
-                '<div id="msg" class="errors" style="background-color: rgb(255, 238, 221);">' +
-                page.results[0].ERRORDESCRIPTION +
-                '</div>');
+            '<div id="msg" class="errors" style="background-color: rgb(255, 238, 221);">' +
+            page.results[0].ERRORDESCRIPTION +
+            '</div>');
         jQuery('#login').show();
     }
 }
@@ -195,10 +199,10 @@ function aceIOError(page, status, jqXHR)
     log('error: %o, %o', page, jqXHR);
     jQuery('#login').show();
     jQuery('#msg').replaceWith('' +
-            '<div id="msg" class="errors" style="background-color: rgb(255, 238, 221);">' +
-            '<p>An error occurred communicating with ace project.  ' +
-            'Please use ace project directly, and try again later.</p> ' +
-            '</div>');
+        '<div id="msg" class="errors" style="background-color: rgb(255, 238, 221);">' +
+        '<p>An error occurred communicating with ace project.  ' +
+        'Please use ace project directly, and try again later.</p> ' +
+        '</div>');
 }
 
 jQuery(document).ready(function ()
@@ -206,6 +210,15 @@ jQuery(document).ready(function ()
     jQuery(document).ajaxStop(function (event, XMLHttpRequest, ajaxOptions)
     {
         myWork.ajaxStop();
+    });
+
+    jQuery(document).ajaxSuccess(function (event, XMLHttpRequest, ajaxOptions)
+    {
+        if (ajaxOptions.appendElement !== undefined)
+        {
+            /* Handle appending html response to an element */
+            jQuery(ajaxOptions.appendElement).append(XMLHttpRequest.responseText);
+        }
     });
 
     // Check for existing login
@@ -231,29 +244,29 @@ jQuery(document).ready(function ()
 
     // Register login form button clicks for submitting the data through ajax.
     jQuery('#login-submit').unbind('click.login').bind('click.login',
-            function (event)
-            {
-                log('submit clicked');
-                jQuery('#msg').replaceWith('<div id="msg"></div>');
-                var formData = jQuery("#fm1").serialize();
-                log('Form Data: %s', formData);
-                jQuery.ajax({
-                    url: aceLogin,
-                    type: 'post',
-                    dataType: 'json',
-                    data: formData,
-                    success: function (page, status, jqXHR)
-                    {
-                        aceLogin(page, status, jqXHR);
-                        location.reload();
-                    },
-                    error: function (page, status, jqXHR)
-                    {
-                        aceIOError(page, status, jqXHR);
-                    }
-                });
-                event.preventDefault();
+        function (event)
+        {
+            log('submit clicked');
+            jQuery('#msg').replaceWith('<div id="msg"></div>');
+            var formData = jQuery("#fm1").serialize();
+            log('Form Data: %s', formData);
+            jQuery.ajax({
+                url: aceLogin,
+                type: 'post',
+                dataType: 'json',
+                data: formData,
+                success: function (page, status, jqXHR)
+                {
+                    aceLogin(page, status, jqXHR);
+                    location.reload();
+                },
+                error: function (page, status, jqXHR)
+                {
+                    aceIOError(page, status, jqXHR);
+                }
             });
+            event.preventDefault();
+        });
 });
 
 /**
