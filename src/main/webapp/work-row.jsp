@@ -21,7 +21,9 @@
   <td>${taskName}</td>
   <td>${sun}- ${mon}- ${tue}- ${wed}- ${thu}- ${fri}- ${sat}</td>
   <td>
-    <img id="icon-${timeSheetLineId}" src="<c:url value="/images/blue-arrow.jpg"/>"/>
+    <a href="" id="icon-${timeSheetLineId}">
+      <img src="<c:url value="/images/blue-arrow.jpg"/>"/>
+    </a>
     <div id="comment-${timeSheetLineId}" style="display: none;">
       <label for="comments-${timeSheetLineId}"></label>
       <textarea id="comments-${timeSheetLineId}" name="comments"

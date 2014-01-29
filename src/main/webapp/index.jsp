@@ -15,12 +15,14 @@
   <title>Fast Time for Ace Project</title>
   <link type="text/css" rel="stylesheet"
         href="css/cas.css">
+  <link href="css/ui-lightness/jquery-ui-1.10.4.custom.css" rel="stylesheet">
 
   <link rel="shortcut icon"
         href="${protocol}://www.athabascau.ca/globalIncludes/core/assets/ico/favicon.ico"
         type="image/x-icon">
   <script type="text/javascript"
           src="<c:url value="/js/jquery-2.0.3.js"/>"></script>
+ 	<script src="js/jquery-ui-1.10.4.custom.js" type="text/javascript"></script>
   <script type="text/javascript"
           src="<c:url value="/js/common.js"/>"></script>
   <script type="text/javascript"
@@ -78,7 +80,7 @@
             src="js/jquery-ui.min.js"></script>--%>
 </div>
 
-<div id="loading" style="display: none;">
+<div id="loading" class="ui-state-highlight ui-corner-all">
   <p id="loading-message">
     Processing...
   </p>

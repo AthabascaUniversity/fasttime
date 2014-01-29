@@ -106,21 +106,21 @@ jQuery(document).ready(function ()
         loadingDiv = jQuery("div#loading");
         loadingDiv.hide();
         log('setup loading spinner');
-        loadingDiv.ajaxStart(function ()
+        jQuery(document).ajaxStart(function ()
         {
             log('begin ajaxStart ' + new Date().getTime());
-            jQuery(this).center();
+            loadingDiv.center();
             /*            jQuery(this).fadeIn('slow', function () {
              orosLog('oros - fadein complete ' + new Date().getTime());
              });*/
-            jQuery(this).show();
+            loadingDiv.show();
             log('end ajaxStart ' + new Date().getTime());
         });
-        loadingDiv.ajaxStop(function (event, XMLHttpRequest, ajaxOptions)
+        jQuery(document).ajaxStop(function ()
         {
             log('begin ajaxStop ' + new Date().getTime());
-            jQuery(this).hide();
-            jQuery(this).stop();
+            loadingDiv.hide();
+            loadingDiv.stop();
             log('end ajaxStop ' + new Date().getTime());
         });
     }
