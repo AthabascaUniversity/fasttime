@@ -83,9 +83,8 @@ var myWork = {
                         var workItem = page.results[i];
                         log('work item %o', workItem);
                         workWeekStart =
-                            new Date(+/\/Date\((\d*)\)\//.exec(workItem.DATE_WEEK_START)[1] +
-                                new Date().getTimezoneOffset() * 60 *
-                                    1000);
+                            new Date(Date.parse(workItem.DATE_WEEK_START) +
+                                new Date().getTimezoneOffset() * 60 * 1000);
                         log('date: %s', workWeekStart);
                         var newWorkItem = {
                             weekStart: workWeekStart,
