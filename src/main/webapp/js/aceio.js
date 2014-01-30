@@ -178,6 +178,7 @@ function aceLogin(page, status, jqXHR)
     log('success: %o', page);
     if ('ok' == page.status)
     {
+        log('Getting user info');
         loginInfo = page.results[0];
         jQuery('#identity').replaceWith('' +
             '<div id="identity">Welcome ' +
@@ -191,6 +192,7 @@ function aceLogin(page, status, jqXHR)
     }
     else
     {
+        log('Login error: %o, %o', page, status);
         jQuery('#msg').replaceWith('' +
             '<div id="msg" class="errors" style="background-color: rgb(255, 238, 221);">' +
             page.results[0].ERRORDESCRIPTION +
@@ -263,7 +265,7 @@ jQuery(document).ready(function ()
             var formData = jQuery("#fm1").serialize();
             log('Form Data: %s', formData);
             jQuery.ajax({
-                url: aceLogin,
+                url: aceLoginUrl,
                 type: 'post',
                 dataType: 'json',
                 data: formData,
