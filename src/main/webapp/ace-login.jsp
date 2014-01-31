@@ -27,6 +27,7 @@
   <c:param name="fct" value="getprojects"/>
   <c:param name="accountid" value="athabascau"/>
   <c:param name="format" value="JSON2"/>
+  <c:param name="sortorder" value="PROJECT_NAME"/>
 </c:url>
 
 <script type="text/javascript">

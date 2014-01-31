@@ -59,9 +59,9 @@ var myWork = {
                 myWork.list = [];
                 myWork.load(page);
             },
-            error: function (page, status, jqXHR)
+            error: function (jqXHR, textStatus, errorThrown)
             {
-                aceIOError(page, status, jqXHR);
+                aceIOError(jqXHR, textStatus, errorThrown);
             }
         });
     },
@@ -85,7 +85,6 @@ var myWork = {
                     {
                         var workItem = page.results[i];
                         log('work item %o', workItem);
-                        log('date: %s', workWeekStart);
                         var newWorkItem = convertObject(workItem, {
                             'approvalStatusId': 'APPROVAL_STATUS',
                             'approvalStatusName': 'APPROVAL_STATUS_NAME',
@@ -98,11 +97,11 @@ var myWork = {
                             'comment': 'COMMENT'
                         });
 
-                        workWeekStart =
+                        var workWeekStart =
                             new Date(Date.parse(workItem.DATE_WEEK_START) +
                                 new Date().getTimezoneOffset() * 60 * 1000);
                         newWorkItem['weekStart'] = workWeekStart;
-                        workWeekEnd =
+                        var workWeekEnd =
                             new Date(Date.parse(workItem.DATE_WEEK_END) +
                                 new Date().getTimezoneOffset() * 60 * 1000);
                         newWorkItem['weekEnd'] = workWeekEnd;
@@ -128,9 +127,9 @@ var myWork = {
                         }
                     }
                 },
-                error: function (page, status, jqXHR)
+                error: function (jqXHR, textStatus, errorThrown)
                 {
-                    aceIOError(page, status, jqXHR);
+                    aceIOError(jqXHR, textStatus, errorThrown);
                 }
             });
         }
@@ -173,6 +172,26 @@ var myWork = {
     ]
 };
 
+function listProjects(projects)
+{
+    var projectParameters = projectsToParameters(projects);
+
+    jQuery.ajax({
+        url: 'project-options.jsp',
+        type: 'post',
+        dataType: 'html',
+        appendElement: '#projects',
+        data: 'guid=' + guid + projectParameters,
+        success: function (page, status, jqXHR)
+        {
+            log('projects html: %o', page);
+        },
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+            aceIOError(jqXHR, textStatus, errorThrown);
+        }
+    });
+}
 /***
  * Uses account info returned through a query to either the ace login, or
  * getloginfo web service calls.  Hides the login, or prints an error.
@@ -209,11 +228,12 @@ function aceLogin(page, status, jqXHR)
                     projectId: 'PROJECT_ID',
                     projectName: 'PROJECT_NAME'
                 }, 'projectId');
+                listProjects(projects);
                 log('projects: %o', projects);
             },
-            error: function (page, status, jqXHR)
+            error: function (jqXHR, textStatus, errorThrown)
             {
-                aceIOError(page, status, jqXHR);
+                aceIOError(jqXHR, textStatus, errorThrown);
             }
         });
     }
@@ -235,10 +255,11 @@ function aceLogin(page, status, jqXHR)
  * @param status jQuery status
  * @param jqXHR jQuery jqXHR
  */
-function aceIOError(page, status, jqXHR)
+function aceIOError(jqXHR, textStatus, errorThrown)
 {
-    log('error: %o, %o', page, jqXHR);
-    jQuery('#login').show();
+    log('error: %o, %o, %o', jqXHR, textStatus, errorThrown);
+
+//    jQuery('#login').show();
     jQuery('#msg').replaceWith('' +
         '<div id="msg" class="errors" style="background-color: rgb(255, 238, 221);">' +
         '<p>An error occurred communicating with ace project.  ' +
@@ -255,12 +276,19 @@ jQuery(document).ready(function ()
 
     jQuery(document).ajaxSuccess(function (event, XMLHttpRequest, ajaxOptions)
     {
+        log('success: %o, %o, %o', event, XMLHttpRequest, ajaxOptions);
         if (ajaxOptions.appendElement !== undefined)
         {
             /* Handle appending html response to an element */
             jQuery(ajaxOptions.appendElement).append(XMLHttpRequest.responseText);
         }
     });
+
+    jQuery(document).ajaxError(function (event, jqXHR, settings, exception)
+        {
+            log('error: %o, %o, %o', event, jqXHR, settings);
+        }
+    );
 
     // Check for existing login
     guid = getCookie("fasttime");
@@ -405,4 +433,16 @@ function convertArrayOfObjects(inArray, mapping, keyMapping)
         }
     }
     return outArray;
+}
+
+function projectsToParameters(ascArray)
+{
+    var parameters = '';
+    for (var key in ascArray)
+    {
+        parameters += '&';
+        parameters += 'projectId=' + encodeURI(ascArray[key]['projectId']);
+        parameters += '&projectName=' + encodeURI(ascArray[key]['projectName']);
+    }
+    return parameters;
 }
