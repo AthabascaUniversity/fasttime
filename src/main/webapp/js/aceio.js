@@ -6,7 +6,9 @@ var aceLoginInfoUrl;
 var aceGetWeeksUrl;
 var aceGetWorkItemsUrl;
 var aceLoginUrl;
-var aceGetProjects;
+var aceGetProjectsUrl;
+var aceGetTaskssUrl;
+
 var guid;
 
 function getRowUrl(newWorkItem)
@@ -43,25 +45,69 @@ function getRowUrl(newWorkItem)
 var projects = {
     list: {0: {projectId: '', projectName: ''}},
     /**
-     * Gets the available projects.
+     * Gets the available projects from the Ace Project API
      */
-    getProjects: function()
+    getProjects: function ()
     {
         log('loading projects...');
         jQuery.ajax({
-            url: aceGetProjects,
+            url: aceGetProjectsUrl,
             type: 'post',
             dataType: 'json',
             data: 'guid=' + guid,
             success: function (page, status, jqXHR)
             {
                 log('projects: %o', page);
-                list = convertArrayOfObjects(page.results, {
+                projects.list = convertArrayOfObjects(page.results, {
                     projectId: 'PROJECT_ID',
                     projectName: 'PROJECT_NAME'
                 }, 'projectId');
-                log('projects: %o', list);
-                projects.listProjects(list);
+                log('projects: %o', projects.list);
+                for (key in projects.list)
+                {
+                    projects.list[key].getTasks =
+                        /*
+                         * Gets the available tasks for each project
+                         */
+                        function ()
+                        {
+                            if (this.tasks !== undefined)
+                            {
+                                return this.tasks;
+                            }
+                            else
+                            {
+                                var newTasks;
+                                var $this = this;
+                                jQuery.ajax({
+                                    url: aceGetTaskssUrl,
+                                    type: 'post',
+                                    dataType: 'json',
+                                    data: 'guid=' + guid +
+                                        '&projectId=' + $this.projectId,
+                                    success: function (page, status, jqXHR)
+                                    {
+                                        log('tasks: %o', page);
+                                        $this.tasks =
+                                            convertArrayOfObjects(page.results,
+                                                {
+                                                    taskId: 'TASK_ID',
+                                                    taskName: 'TASK_RESUME'
+                                                }, 'taskId');
+                                        log('tasks: %o', $this.tasks);
+                                    },
+                                    error: function (jqXHR, textStatus,
+                                        errorThrown)
+                                    {
+                                        aceIOError(jqXHR, textStatus,
+                                            errorThrown);
+                                    }
+                                });
+                            }
+                        };
+
+                }
+                projects.loadCombo(projects.list);
             },
             error: function (jqXHR, textStatus, errorThrown)
             {
@@ -69,9 +115,9 @@ var projects = {
             }
         });
     },
-    listProjects: function ()
+    loadCombo: function ()
     {
-        var projectParameters = projectsToParameters(list);
+        var projectParameters = projectsToParameters(projects.list);
 
         jQuery.ajax({
             url: 'project-options.jsp',
