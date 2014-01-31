@@ -39,4 +39,4 @@
 </div>
 
 <%-- Handles proper login to ace web services --%>
-<jsp:include page="ace-login.jsp"/>
+<jsp:include page="ace-urls.jsp"/>
