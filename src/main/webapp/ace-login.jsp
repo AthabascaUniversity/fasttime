@@ -23,6 +23,12 @@
   <c:param name="format" value="JSON2"/>
 </c:url>
 
+<c:url var="aceGetProjects" value="https://api.aceproject.com/">
+  <c:param name="fct" value="getprojects"/>
+  <c:param name="accountid" value="athabascau"/>
+  <c:param name="format" value="JSON2"/>
+</c:url>
+
 <script type="text/javascript">
   /*      <![CDATA[ */
 
@@ -30,6 +36,7 @@
   aceGetWeeksUrl = '${aceGetWeeks}';
   aceGetWorkItemsUrl = '${aceGetWorkItems}';
   aceLoginUrl = '${aceLogin}';
+  aceGetProjects = '${aceGetProjects}';
 
   /*  new Date(new Date().setFullYear('2014', '01', '27'));
    alert(myDate.getYear + '-' + myDate.getMonth());*/

@@ -6,6 +6,7 @@ var aceLoginInfoUrl;
 var aceGetWeeksUrl;
 var aceGetWorkItemsUrl;
 var aceLoginUrl;
+var aceGetProjects;
 var guid;
 
 function getRowUrl(newWorkItem)
@@ -38,6 +39,8 @@ function getRowUrl(newWorkItem)
 
     return workRowUrl;
 }
+
+var projects = {0: {projectId: '', projectName: ''}};
 
 var myWork = {
     /**
@@ -86,18 +89,20 @@ var myWork = {
                             new Date(Date.parse(workItem.DATE_WEEK_START) +
                                 new Date().getTimezoneOffset() * 60 * 1000);
                         log('date: %s', workWeekStart);
-                        var newWorkItem = {
-                            weekStart: workWeekStart,
-                            approvalStatusId: workItem.APPROVAL_STATUS,
-                            approvalStatusName: workItem.APPROVAL_STATUS_NAME,
-                            projectId: workItem.PROJECT_ID,
-                            projectName: workItem.PROJECT_NAME,
-                            taskId: workItem.TASK_ID,
-                            taskName: workItem.TASK_RESUME,
-                            timeSheetLineId: workItem.TIMESHEET_LINE_ID,
-                            timeSheetPeriodId: workItem.TIMESHEET_PERIOD_ID,
-                            comment: workItem.COMMENT,
-                            work: {
+                        var newWorkItem = convertObject(workItem, {
+                            'approvalStatusId': 'APPROVAL_STATUS',
+                            'approvalStatusName': 'APPROVAL_STATUS_NAME',
+                            'projectId': 'PROJECT_ID',
+                            'projectName': 'PROJECT_NAME',
+                            'taskId': 'TASK_ID',
+                            'taskName': 'TASK_RESUME',
+                            'timeSheetLineId': 'TIMESHEET_LINE_ID',
+                            'timeSheetPeriodId': 'TIMESHEET_PERIOD_ID',
+                            'comment': 'COMMENT'
+                        });
+
+                        newWorkItem['weekStart'] = workWeekStart;
+                        newWorkItem['work'] = {
                                 sun: workItem.TOTAL1,
                                 mon: workItem.TOTAL2,
                                 tue: workItem.TOTAL3,
@@ -107,7 +112,6 @@ var myWork = {
                                 sat: workItem.TOTAL7,
                                 total: workItem.TOTAL
                             }
-                        };
 
                         if (0 != newWorkItem.timeSheetLineId)
                         { // only *real* time items, not the predicted ones.
@@ -247,6 +251,26 @@ jQuery(document).ready(function ()
             data: 'guid=' + guid,
             success: function (page, status, jqXHR)
             {
+                log('loading projects...');
+                jQuery.ajax({
+                    url: aceGetProjects,
+                    type: 'post',
+                    dataType: 'json',
+                    data: 'guid=' + guid,
+                    success: function (page, status, jqXHR)
+                    {
+                        log('projects: %o', page);
+                        projects = convertArrayOfObjects(page.results, {
+                            projectId: 'PROJECT_ID',
+                            projectName: 'PROJECT_NAME'
+                        }, 'projectId');
+                        log('projects: %o', projects);
+                    },
+                    error: function (page, status, jqXHR)
+                    {
+                        aceIOError(page, status, jqXHR);
+                    }
+                });
                 aceLogin(page, status, jqXHR);
             },
             error: function (page, status, jqXHR)
@@ -283,6 +307,13 @@ jQuery(document).ready(function ()
             });
             event.preventDefault();
         });
+
+    jQuery('#date').unbind('change.date').bind('change.date',
+        function (event)
+        {
+            event.preventDefault();
+        });
+
 });
 
 /**
@@ -307,4 +338,63 @@ function testCall(queryUrl)
         }
     });
 
+}
+
+/**
+ * Converts one type of associative array to another with different keys.
+ *
+ * @param inObject the object to convert
+ * @param mapping the mapping of keys to other keys.  The key is the destination
+ * key, while the value associated with the key is the original key name.
+ * @returns {} the resulting object
+ */
+function convertObject(inObject, mapping)
+{
+    var outObject = {};
+    for (var key in mapping)
+    {
+//        log('mapping: %s = %s, %o', key, mapping[key], inObject[mapping[key]]);
+        outObject[key] = inObject[mapping[key]];
+    }
+
+    log('mapped object: %o', outObject);
+    return outObject;
+}
+
+/**
+ * Converts an array of one type of associative arrays to another with
+ * different keys.
+ *
+ * @param inArray the array containing objects to convert
+ * @param mapping the mapping of keys to other keys.  The key is the destination
+ * key, while the value associated with the key is the original key name.
+ * @param keyMapping optional parameter specifying that the new array should
+ * be mapped by this key name in the final object.  If not defined, store in a
+ * standard array.
+ *
+ * @returns {} the resulting array object
+ *
+ * @returns {Array}
+ */
+function convertArrayOfObjects(inArray, mapping, keyMapping)
+{
+    var outArray;
+    if (keyMapping === undefined)
+    {
+        outArray = [];
+        for (var i = 0; i < inArray.length; i++)
+        {
+            outArray[i] = convertObject(inArray[i], mapping);
+        }
+    }
+    else
+    {
+        outArray = {};
+        for (var i = 0; i < inArray.length; i++)
+        {
+            var newObject = convertObject(inArray[i], mapping);
+            outArray[newObject[keyMapping]] = newObject;
+        }
+    }
+    return outArray;
 }

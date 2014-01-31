@@ -1,9 +1,5 @@
 <%@ taglib prefix="ht" tagdir="/WEB-INF/tags/ht" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%
-  response.setHeader("Access-Control-Allow-Origin", "*");
-%>
-<%@ page isELIgnored="false" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
@@ -43,6 +39,7 @@
       <div id="content" class="fl-screenNavigator-scroll-container">
         <div>
           <jsp:include page="login.jsp"/>
+          <jsp:include page="interface.jsp"/>
           <jsp:include page="sidebar.jsp"/>
         </div>
         <div style="display: none;" id="work">

@@ -469,6 +469,7 @@ table.border {
     border: 1px solid #CCCCCC;
     border-collapse: collapse;
     padding: .2em .2em .2em .2em;
+    margin: 1em;
 }
 
 table.border td {
