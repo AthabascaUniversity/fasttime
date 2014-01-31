@@ -193,6 +193,25 @@ function aceLogin(page, status, jqXHR)
         jQuery('#login').hide();
         guid = loginInfo.GUID;
         myWork.loadWeeks();
+        jQuery.ajax({
+            url: aceGetProjects,
+            type: 'post',
+            dataType: 'json',
+            data: 'guid=' + guid,
+            success: function (page, status, jqXHR)
+            {
+                log('projects: %o', page);
+                projects = convertArrayOfObjects(page.results, {
+                    projectId: 'PROJECT_ID',
+                    projectName: 'PROJECT_NAME'
+                }, 'projectId');
+                log('projects: %o', projects);
+            },
+            error: function (page, status, jqXHR)
+            {
+                aceIOError(page, status, jqXHR);
+            }
+        });
     }
     else
     {
@@ -252,25 +271,6 @@ jQuery(document).ready(function ()
             success: function (page, status, jqXHR)
             {
                 log('loading projects...');
-                jQuery.ajax({
-                    url: aceGetProjects,
-                    type: 'post',
-                    dataType: 'json',
-                    data: 'guid=' + guid,
-                    success: function (page, status, jqXHR)
-                    {
-                        log('projects: %o', page);
-                        projects = convertArrayOfObjects(page.results, {
-                            projectId: 'PROJECT_ID',
-                            projectName: 'PROJECT_NAME'
-                        }, 'projectId');
-                        log('projects: %o', projects);
-                    },
-                    error: function (page, status, jqXHR)
-                    {
-                        aceIOError(page, status, jqXHR);
-                    }
-                });
                 aceLogin(page, status, jqXHR);
             },
             error: function (page, status, jqXHR)
@@ -296,9 +296,6 @@ jQuery(document).ready(function ()
                 success: function (page, status, jqXHR)
                 {
                     aceLogin(page, status, jqXHR);
-                    // first login gets a page reload to execute the
-                    // first guid based load
-                    location.reload();
                 },
                 error: function (page, status, jqXHR)
                 {
