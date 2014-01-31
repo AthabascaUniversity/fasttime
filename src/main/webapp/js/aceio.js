@@ -85,9 +85,6 @@ var myWork = {
                     {
                         var workItem = page.results[i];
                         log('work item %o', workItem);
-                        workWeekStart =
-                            new Date(Date.parse(workItem.DATE_WEEK_START) +
-                                new Date().getTimezoneOffset() * 60 * 1000);
                         log('date: %s', workWeekStart);
                         var newWorkItem = convertObject(workItem, {
                             'approvalStatusId': 'APPROVAL_STATUS',
@@ -101,17 +98,24 @@ var myWork = {
                             'comment': 'COMMENT'
                         });
 
+                        workWeekStart =
+                            new Date(Date.parse(workItem.DATE_WEEK_START) +
+                                new Date().getTimezoneOffset() * 60 * 1000);
                         newWorkItem['weekStart'] = workWeekStart;
+                        workWeekEnd =
+                            new Date(Date.parse(workItem.DATE_WEEK_END) +
+                                new Date().getTimezoneOffset() * 60 * 1000);
+                        newWorkItem['weekEnd'] = workWeekEnd;
                         newWorkItem['work'] = {
-                                sun: workItem.TOTAL1,
-                                mon: workItem.TOTAL2,
-                                tue: workItem.TOTAL3,
-                                wed: workItem.TOTAL4,
-                                thu: workItem.TOTAL5,
-                                fri: workItem.TOTAL6,
-                                sat: workItem.TOTAL7,
-                                total: workItem.TOTAL
-                            }
+                            sun: workItem.TOTAL1,
+                            mon: workItem.TOTAL2,
+                            tue: workItem.TOTAL3,
+                            wed: workItem.TOTAL4,
+                            thu: workItem.TOTAL5,
+                            fri: workItem.TOTAL6,
+                            sat: workItem.TOTAL7,
+                            total: workItem.TOTAL
+                        }
 
                         if (0 != newWorkItem.timeSheetLineId)
                         { // only *real* time items, not the predicted ones.
