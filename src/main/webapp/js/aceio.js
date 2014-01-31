@@ -369,8 +369,14 @@ function convertObject(inObject, mapping)
  * @param mapping the mapping of keys to other keys.  The key is the destination
  * key, while the value associated with the key is the original key name.
  * @param keyMapping optional parameter specifying that the new array should
- * be mapped by this key name in the final object.  If not defined, store in a
- * standard array.
+ * have keys equal to the value of this key in the final object.  If not defined,
+ * store in a standard array.
+ *
+ * e.g. Convert array to standard array of associative arrays
+ * convertArrayOfObjects([{blahId: 0, blah: 'blahValue'}], {'duh' : 'blah', 'id' : 'blahId'});
+ *
+ * e.g. Map the array to an array keyed on the id.
+ * convertArrayOfObjects([{blahId: 0, blah: 'blahValue'}], {'duh' : 'blah', 'id' : 'blahId'}, 'id');
  *
  * @returns {} the resulting array object
  *
@@ -380,7 +386,7 @@ function convertArrayOfObjects(inArray, mapping, keyMapping)
 {
     var outArray;
     if (keyMapping === undefined)
-    {
+    {   // convert as straight array.
         outArray = [];
         for (var i = 0; i < inArray.length; i++)
         {
@@ -388,7 +394,8 @@ function convertArrayOfObjects(inArray, mapping, keyMapping)
         }
     }
     else
-    {
+    {   // convert using the specified value of the object as the key
+        // for the new array
         outArray = {};
         for (var i = 0; i < inArray.length; i++)
         {
