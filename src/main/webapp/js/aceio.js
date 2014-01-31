@@ -40,7 +40,56 @@ function getRowUrl(newWorkItem)
     return workRowUrl;
 }
 
-var projects = {0: {projectId: '', projectName: ''}};
+var projects = {
+    list: {0: {projectId: '', projectName: ''}},
+    /**
+     * Gets the available projects.
+     */
+    getProjects: function()
+    {
+        log('loading projects...');
+        jQuery.ajax({
+            url: aceGetProjects,
+            type: 'post',
+            dataType: 'json',
+            data: 'guid=' + guid,
+            success: function (page, status, jqXHR)
+            {
+                log('projects: %o', page);
+                list = convertArrayOfObjects(page.results, {
+                    projectId: 'PROJECT_ID',
+                    projectName: 'PROJECT_NAME'
+                }, 'projectId');
+                log('projects: %o', list);
+                projects.listProjects(list);
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
+                aceIOError(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    listProjects: function ()
+    {
+        var projectParameters = projectsToParameters(list);
+
+        jQuery.ajax({
+            url: 'project-options.jsp',
+            type: 'post',
+            dataType: 'html',
+            appendElement: '#projects',
+            data: 'guid=' + guid + projectParameters,
+            success: function (page, status, jqXHR)
+            {
+                log('projects html: %o', page);
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
+                aceIOError(jqXHR, textStatus, errorThrown);
+            }
+        });
+    }
+};
 
 var myWork = {
     /**
@@ -172,26 +221,6 @@ var myWork = {
     ]
 };
 
-function listProjects(projects)
-{
-    var projectParameters = projectsToParameters(projects);
-
-    jQuery.ajax({
-        url: 'project-options.jsp',
-        type: 'post',
-        dataType: 'html',
-        appendElement: '#projects',
-        data: 'guid=' + guid + projectParameters,
-        success: function (page, status, jqXHR)
-        {
-            log('projects html: %o', page);
-        },
-        error: function (jqXHR, textStatus, errorThrown)
-        {
-            aceIOError(jqXHR, textStatus, errorThrown);
-        }
-    });
-}
 /***
  * Uses account info returned through a query to either the ace login, or
  * getloginfo web service calls.  Hides the login, or prints an error.
@@ -216,26 +245,7 @@ function aceLogin(page, status, jqXHR)
         jQuery('#login').hide();
         guid = loginInfo.GUID;
         myWork.loadWeeks();
-        jQuery.ajax({
-            url: aceGetProjects,
-            type: 'post',
-            dataType: 'json',
-            data: 'guid=' + guid,
-            success: function (page, status, jqXHR)
-            {
-                log('projects: %o', page);
-                projects = convertArrayOfObjects(page.results, {
-                    projectId: 'PROJECT_ID',
-                    projectName: 'PROJECT_NAME'
-                }, 'projectId');
-                listProjects(projects);
-                log('projects: %o', projects);
-            },
-            error: function (jqXHR, textStatus, errorThrown)
-            {
-                aceIOError(jqXHR, textStatus, errorThrown);
-            }
-        });
+        projects.getProjects();
     }
     else
     {
@@ -302,7 +312,6 @@ jQuery(document).ready(function ()
             data: 'guid=' + guid,
             success: function (page, status, jqXHR)
             {
-                log('loading projects...');
                 aceLogin(page, status, jqXHR);
             },
             error: function (page, status, jqXHR)
