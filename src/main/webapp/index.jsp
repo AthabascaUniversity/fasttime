@@ -48,7 +48,13 @@
               <th>Status</th>
               <th>Project</th>
               <th>Task</th>
-              <th>Work</th>
+              <th>Sun</th>
+              <th>Mon</th>
+              <th>Tue</th>
+              <th>Wed</th>
+              <th>Thu</th>
+              <th>Fri</th>
+              <th>Sat</th>
               <th>Notes</th>
             </tr>
           </table>

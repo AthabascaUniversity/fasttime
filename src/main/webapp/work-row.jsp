@@ -19,11 +19,18 @@
   <td>${statusName}</td>
   <td>${projectName}</td>
   <td>${taskName}</td>
-  <td>${sun}- ${mon}- ${tue}- ${wed}- ${thu}- ${fri}- ${sat}</td>
+  <td>${sun}</td>
+  <td>${mon}</td>
+  <td>${tue}</td>
+  <td>${wed}</td>
+  <td>${thu}</td>
+  <td>${fri}</td>
+  <td>${sat}</td>
   <td>
     <a href="" id="icon-${timeSheetLineId}">
       <img src="<c:url value="/images/blue-arrow.jpg"/>"/>
     </a>
+
     <div id="comment-${timeSheetLineId}" style="display: none;">
       <label for="comments-${timeSheetLineId}"></label>
       <textarea id="comments-${timeSheetLineId}" name="comments"
