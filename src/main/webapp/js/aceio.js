@@ -69,11 +69,11 @@ var projects = {
                         /*
                          * Gets the available tasks for each project
                          */
-                        function ()
+                        function (callBack)
                         {
                             if (this.tasks !== undefined)
                             {
-                                return this.tasks;
+                                return callBack(this.tasks);
                             }
                             else
                             {
@@ -87,14 +87,18 @@ var projects = {
                                         '&projectId=' + $this.projectId,
                                     success: function (page, status, jqXHR)
                                     {
-                                        log('tasks: %o', page);
+                                        log('ace tasks response: %o', page);
                                         $this.tasks =
                                             convertArrayOfObjects(page.results,
                                                 {
                                                     taskId: 'TASK_ID',
                                                     taskName: 'TASK_RESUME'
                                                 }, 'taskId');
-                                        log('tasks: %o', $this.tasks);
+                                        $this.tasks.loadCombo = function ()
+                                        {
+                                            projects.loadTaskCombo($this.tasks);
+                                        };
+                                        callBack($this.tasks);
                                     },
                                     error: function (jqXHR, textStatus,
                                         errorThrown)
@@ -115,10 +119,31 @@ var projects = {
             }
         });
     },
+    loadTaskCombo: function(tasks)
+    {
+        var taskParameters = tasksToParameters(tasks);
+        jQuery('#tasks option').remove();
+        jQuery.ajax({
+            url: 'task-options.jsp',
+            type: 'post',
+            dataType: 'html',
+            appendElement: '#tasks',
+            data: 'guid=' + guid + taskParameters,
+            success: function (page, status, jqXHR)
+            {
+                log('projects html: %o', page);
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
+                aceIOError(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
     loadCombo: function ()
     {
         var projectParameters = projectsToParameters(projects.list);
 
+        jQuery('#projects option').remove();
         jQuery.ajax({
             url: 'project-options.jsp',
             type: 'post',
@@ -498,6 +523,22 @@ function projectsToParameters(ascArray)
         parameters += '&';
         parameters += 'projectId=' + encodeURI(ascArray[key]['projectId']);
         parameters += '&projectName=' + encodeURI(ascArray[key]['projectName']);
+    }
+    return parameters;
+}
+
+function tasksToParameters(ascArray)
+{
+    var parameters = '';
+    for (var key in ascArray)
+    {
+        if(typeof(ascArray[key]) == "function")
+        {
+            continue;
+        }
+        parameters += '&';
+        parameters += 'taskId=' + encodeURI(ascArray[key]['taskId']);
+        parameters += '&taskName=' + encodeURI(ascArray[key]['taskName']);
     }
     return parameters;
 }

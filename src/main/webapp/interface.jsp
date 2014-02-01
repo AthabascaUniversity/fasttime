@@ -42,3 +42,25 @@
     </tr>
   </table>
 </div>
+
+<script type="text/javascript">
+  /*      <![CDATA[ */
+  jQuery(document).ready(
+    function ()
+    {
+      projectsCombo = jQuery('#projects');
+      projectsCombo.unbind('change.project').bind('change.project',
+        function (event)
+        {
+          if (projects.list[projectsCombo.val()] !== undefined)
+          {
+            projects.list['' + projectsCombo.val()].getTasks(function (tasks)
+            {
+              tasks.loadCombo();
+            });
+          }
+        });
+    }
+  );
+  /*      ]]> */
+</script>
