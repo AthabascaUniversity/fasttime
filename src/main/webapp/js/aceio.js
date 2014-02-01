@@ -54,7 +54,7 @@ var projects = {
             url: aceGetProjectsUrl,
             type: 'post',
             dataType: 'json',
-            data: 'guid=' + guid,
+            data: 'guid=' + guid + '&FilterCompletedProject=false',
             success: function (page, status, jqXHR)
             {
                 log('projects: %o', page);
@@ -84,7 +84,8 @@ var projects = {
                                     type: 'post',
                                     dataType: 'json',
                                     data: 'guid=' + guid +
-                                        '&projectId=' + $this.projectId,
+                                        '&projectId=' + $this.projectId +
+                                    '&FilterTaskCompleted=false',
                                     success: function (page, status, jqXHR)
                                     {
                                         log('ace tasks response: %o', page);
