@@ -18,6 +18,10 @@ function getRowUrl(newWorkItem)
         encodeURI(newWorkItem.approvalStatusId) +
         '&statusName=' +
         encodeURI(newWorkItem.approvalStatusName) +
+        '&weekStart=' +
+        encodeURI(newWorkItem.weekStart.getFullYear() + '-' +
+            newWorkItem.weekStart.getMonth() + '-' +
+            newWorkItem.weekStart.getDay()) +
         '&projectId=' +
         encodeURI(newWorkItem.projectId) +
         '&projectName=' +
@@ -52,8 +56,6 @@ var projects = {
         log('loading projects...');
         jQuery.ajax({
             url: aceGetProjectsUrl,
-            type: 'post',
-            dataType: 'json',
             data: 'guid=' + guid + '&FilterCompletedProject=false',
             success: function (page, status, jqXHR)
             {
@@ -81,8 +83,6 @@ var projects = {
                                 var $this = this;
                                 jQuery.ajax({
                                     url: aceGetTaskssUrl,
-                                    type: 'post',
-                                    dataType: 'json',
                                     data: 'guid=' + guid +
                                         '&projectId=' + $this.projectId +
                                     '&FilterTaskCompleted=false',
@@ -120,14 +120,16 @@ var projects = {
             }
         });
     },
+    /**
+     * Loads the task combo box.
+     * @param tasks
+     */
     loadTaskCombo: function(tasks)
     {
         var taskParameters = tasksToParameters(tasks);
         jQuery('#tasks option').remove();
         jQuery.ajax({
             url: 'task-options.jsp',
-            type: 'post',
-            dataType: 'html',
             appendElement: '#tasks',
             data: 'guid=' + guid + taskParameters,
             success: function (page, status, jqXHR)
@@ -140,6 +142,9 @@ var projects = {
             }
         });
     },
+    /**
+     * Loads the project list combo box.
+     */
     loadCombo: function ()
     {
         var projectParameters = projectsToParameters(projects.list);
@@ -147,8 +152,6 @@ var projects = {
         jQuery('#projects option').remove();
         jQuery.ajax({
             url: 'project-options.jsp',
-            type: 'post',
-            dataType: 'html',
             appendElement: '#projects',
             data: 'guid=' + guid + projectParameters,
             success: function (page, status, jqXHR)
@@ -171,8 +174,6 @@ var myWork = {
     {
         jQuery.ajax({
             url: aceGetWeeksUrl,
-            type: 'get',
-            dataType: 'json',
             data: 'guid=' + guid,
             success: function (page, status, jqXHR)
             {
@@ -195,8 +196,6 @@ var myWork = {
         {
             jQuery.ajax({
                 url: aceGetWorkItemsUrl,
-                type: 'get',
-                dataType: 'json',
                 data: 'guid=' + guid + '&timeperiodid=' +
                     workWeek.results[i].TIMESHEET_PERIOD_ID,
                 workListGenerator: true,
@@ -225,6 +224,7 @@ var myWork = {
                         var workWeekEnd =
                             new Date(Date.parse(workItem.DATE_WEEK_END) +
                                 new Date().getTimezoneOffset() * 60 * 1000);
+                        workWeekEnd.getUTC
                         newWorkItem['weekEnd'] = workWeekEnd;
                         newWorkItem['work'] = {
                             sun: workItem.TOTAL1,
@@ -379,8 +379,6 @@ jQuery(document).ready(function ()
     {
         jQuery.ajax({
             url: aceLoginInfoUrl,
-            type: 'get',
-            dataType: 'json',
             data: 'guid=' + guid,
             success: function (page, status, jqXHR)
             {
@@ -403,8 +401,6 @@ jQuery(document).ready(function ()
             log('Form Data: %s', formData);
             jQuery.ajax({
                 url: aceLoginUrl,
-                type: 'post',
-                dataType: 'json',
                 data: formData,
                 success: function (page, status, jqXHR)
                 {
@@ -435,8 +431,6 @@ function testCall(queryUrl)
 {
     jQuery.ajax({
         url: queryUrl,
-        type: 'get',
-        dataType: 'json',
         data: 'guid=' + guid,
         success: function (page, status, jqXHR)
         {

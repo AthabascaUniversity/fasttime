@@ -3,41 +3,42 @@
   <table class="border">
     <tr>
       <td>
-        <label for="date">Date</label>
+        <%--<label for="date">Date</label>--%>
         <input type="text" id="date" name="date"/>
         <ht:script type="text/javascript" jquery="true" ready="true">
           $("#date").datepicker({onSelect: function ()
           {
-
+            jQuery('#projects').focus();
           }, autoSize: true,
             dateFormat: "yy-M-dd"
           });
         </ht:script>
       </td>
       <td>
-        <label for="projects">Projects</label>
+        <%--<label for="projects">Projects</label>--%>
         <select id="projects" name="project">
         </select>
       </td>
       <td>
-        <label for="tasks">Tasks</label>
+        <%--<label for="tasks">Tasks</label>--%>
         <select id="tasks" name="task">
         </select>
       </td>
       <td>
-        <a class="aEditableField" href="#">0.00</a>
-
-        <div style="display:none;">
-          <input type="text"
-                 class="input-small-list"
-                 size="2"
-                 autocomplete="off">
-        </div>
+        <input type="text"
+               name="hours"
+               id="hours"
+               class="input-small-list"
+               size="2"
+               autocomplete="off">
       </td>
       <%--      <td time_type_id="1">Regular&nbsp;</td>--%>
       <td style="white-space:nowrap"> &nbsp;
-        <label for="comment">Comment</label>
-        <input type="text" id="comment" name="comment">
+        <%--<label for="comment">Comment</label>--%>
+        <textarea name="comments" id="comments" rows="3"></textarea>
+      </td>
+      <td>
+        <input type="submit" id="save" value="Save"/>
       </td>
     </tr>
   </table>
@@ -48,7 +49,7 @@
   jQuery(document).ready(
     function ()
     {
-      projectsCombo = jQuery('#projects');
+      var projectsCombo = jQuery('#projects');
       projectsCombo.unbind('change.project').bind('change.project',
         function (event)
         {
@@ -64,6 +65,17 @@
             jQuery('#tasks option').remove();
           }
         });
+      var saveButton = jQuery('#save');
+      saveButton.unbind('click.save').bind('click.save', function (event)
+        {
+          var date = jQuery('#date');
+          var tasks = jQuery('#tasks');
+          var hours = jQuery('#hours');
+          var comments = jQuery('#comments');
+          log('saving values %s, %s, %s, %s, %s', date.val(),
+            projectsCombo.val(), tasks.val(), hours.val(), comments.val());
+        }
+      );
     }
   );
   /*      ]]> */

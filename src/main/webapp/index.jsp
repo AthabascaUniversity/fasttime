@@ -45,6 +45,7 @@
         <div style="display: none;" id="work">
           <table class="debugtable border" id="time">
             <tr>
+              <th>Week Start</th>
               <th>Status</th>
               <th>Project</th>
               <th>Task</th>

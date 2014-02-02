@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="statusId" value="${param['statusId']}"/>
 <c:set var="statusName" value="${param['statusName']}"/>
+<c:set var="weekStart" value="${param['weekStart']}"/>
 <c:set var="projectId" value="${param['projectId']}"/>
 <c:set var="projectName" value="${param['projectName']}"/>
 <c:set var="taskId" value="${param['taskId']}"/>
@@ -16,6 +17,7 @@
 <c:set var="sat" value="${param['sat']}"/>
 
 <tr>
+  <td>${weekStart}</td>
   <td>${statusName}</td>
   <td>${projectName}</td>
   <td>${taskName}</td>
