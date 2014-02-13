@@ -1,7 +1,9 @@
+<%@ page import="java.util.Calendar" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <c:set var="statusId" value="${param['statusId']}"/>
 <c:set var="statusName" value="${param['statusName']}"/>
-<c:set var="weekStart" value="${param['weekStart']}"/>
 <c:set var="projectId" value="${param['projectId']}"/>
 <c:set var="projectName" value="${param['projectName']}"/>
 <c:set var="taskId" value="${param['taskId']}"/>
@@ -16,8 +18,16 @@
 <c:set var="fri" value="${param['fri']}"/>
 <c:set var="sat" value="${param['sat']}"/>
 
+<%
+  final Calendar weekStart = Calendar.getInstance();
+  weekStart.setTimeInMillis(Long.parseLong(request.getParameter("weekStart")));
+  request.setAttribute("weekStart", weekStart);
+%>
 <tr>
-  <td>${weekStart}</td>
+  <td>
+    <fmt:formatDate value="${weekStart.time}"
+                    pattern="yyyy-MM-dd"/>
+  </td>
   <td>${statusName}</td>
   <td>${projectName}</td>
   <td>${taskName}</td>

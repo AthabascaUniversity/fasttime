@@ -1,4 +1,6 @@
+<%@ page import="java.util.Calendar" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <c:url var="aceLoginInfo" value="http://localhost:8080/fasttime/proxy/">
   <c:param name="fct" value="getlogininfo"/>
@@ -11,10 +13,23 @@
   <c:param name="approvalstatus" value="0"/>
 </c:url>
 
+<%
+  Calendar dateFrom = Calendar.getInstance();
+  // start of week
+  dateFrom.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+  // back one week, meaning two weeks total.
+  dateFrom.add(Calendar.DAY_OF_YEAR, -7);
+  request.setAttribute("dateFrom", dateFrom);
+%>
+
 <c:url var="aceGetWorkItems" value="http://localhost:8080/fasttime/proxy/">
   <c:param name="fct" value="getmyworkitems"/>
   <c:param name="format" value="JSON2"/>
   <c:param name="approvalstatus" value="0"/>
+  <c:param name="TimesheetDateFrom">
+    <fmt:formatDate value="${dateFrom.time}"
+                    pattern="yyyy-MM-dd"/>
+  </c:param>
 </c:url>
 
 <c:url var="aceLogin" value="http://localhost:8080/fasttime/proxy/">

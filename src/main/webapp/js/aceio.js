@@ -19,9 +19,7 @@ function getRowUrl(newWorkItem)
         '&statusName=' +
         encodeURI(newWorkItem.approvalStatusName) +
         '&weekStart=' +
-        encodeURI(newWorkItem.weekStart.getFullYear() + '-' +
-            newWorkItem.weekStart.getMonth() + '-' +
-            newWorkItem.weekStart.getDay()) +
+        newWorkItem.weekStart.getTime() +
         '&projectId=' +
         encodeURI(newWorkItem.projectId) +
         '&projectName=' +
@@ -75,7 +73,7 @@ var projects = {
                         {
                             if (this.tasks !== undefined)
                             {
-                                return callBack(this.tasks);
+                                callBack(this.tasks);
                             }
                             else
                             {
@@ -201,10 +199,10 @@ var myWork = {
                 workListGenerator: true,
                 success: function (page, status, jqXHR)
                 {
+                    log('my work items: %o', page);
                     for (i = 0; i < page.results.length; i++)
                     {
                         var workItem = page.results[i];
-                        log('work item %o', workItem);
                         var newWorkItem = convertObject(workItem, {
                             'approvalStatusId': 'APPROVAL_STATUS',
                             'approvalStatusName': 'APPROVAL_STATUS_NAME',
