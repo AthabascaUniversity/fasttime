@@ -51,7 +51,8 @@
     log('saving values %s, %s, %s, %s, %s', date, projectId, taskId, hours,
       comments);
     jQuery.ajax({
-      url: aceGetWeeksUrl
+      url: aceGetWeeksUrl,
+      data: 'guid=' + guid
     });
   }
 

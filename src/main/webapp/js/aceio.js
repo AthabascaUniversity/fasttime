@@ -217,13 +217,12 @@ var myWork = {
                         });
 
                         var workWeekStart =
-                            new Date(Date.parse(workItem.DATE_WEEK_START) +
+                            new Date(parseInt(/\/Date\((\d*)\)\//.exec(workItem.DATE_WEEK_START)[1]) +
                                 new Date().getTimezoneOffset() * 60 * 1000);
                         newWorkItem['weekStart'] = workWeekStart;
                         var workWeekEnd =
-                            new Date(Date.parse(workItem.DATE_WEEK_END) +
+                            new Date(parseInt(/\/Date\((\d*)\)\//.exec(workItem.DATE_WEEK_END)[1]) +
                                 new Date().getTimezoneOffset() * 60 * 1000);
-                        workWeekEnd.getUTC
                         newWorkItem['weekEnd'] = workWeekEnd;
                         newWorkItem['work'] = {
                             sun: workItem.TOTAL1,
