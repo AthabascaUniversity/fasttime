@@ -46,6 +46,13 @@
 
 <script type="text/javascript">
   /*      <![CDATA[ */
+  function aceSaveWork(date, projectId, taskId, hours, comments)
+  {
+    log('saving values %s, %s, %s, %s, %s', date, projectId, taskId, hours,
+      comments);
+
+  }
+
   jQuery(document).ready(
     function ()
     {
@@ -72,8 +79,8 @@
           var tasks = jQuery('#tasks');
           var hours = jQuery('#hours');
           var comments = jQuery('#comments');
-          log('saving values %s, %s, %s, %s, %s', date.val(),
-            projectsCombo.val(), tasks.val(), hours.val(), comments.val());
+          aceSaveWork(date.val(), projectsCombo.val(), tasks.val(), hours.val(),
+            comments.val());
         }
       );
     }

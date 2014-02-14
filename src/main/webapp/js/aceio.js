@@ -3,7 +3,7 @@
  */
 
 var aceLoginInfoUrl;
-var aceGetWeeksUrl;
+var aceGetMyWeeksUrl;
 var aceGetWorkItemsUrl;
 var aceLoginUrl;
 var aceGetProjectsUrl;
@@ -171,7 +171,7 @@ var myWork = {
     loadWeeks: function loadMyWeeks()
     {
         jQuery.ajax({
-            url: aceGetWeeksUrl,
+            url: aceGetMyWeeksUrl,
             data: 'guid=' + guid,
             success: function (page, status, jqXHR)
             {
