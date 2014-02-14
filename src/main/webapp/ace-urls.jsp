@@ -15,11 +15,13 @@
 
 <%
   Calendar dateFrom = Calendar.getInstance();
+  Calendar dateTo = Calendar.getInstance();
   // start of week
   dateFrom.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
   // back one week, meaning two weeks total.
   dateFrom.add(Calendar.DAY_OF_YEAR, -7);
   request.setAttribute("dateFrom", dateFrom);
+  request.setAttribute("dateTo", dateTo);
 %>
 
 <c:url var="aceGetWorkItems" value="http://localhost:8080/fasttime/proxy/">
@@ -28,6 +30,10 @@
   <c:param name="approvalstatus" value="0"/>
   <c:param name="TimesheetDateFrom">
     <fmt:formatDate value="${dateFrom.time}"
+                    pattern="yyyy-MM-dd"/>
+  </c:param>
+  <c:param name="TimesheetDateTo">
+    <fmt:formatDate value="${dateTo.time}"
                     pattern="yyyy-MM-dd"/>
   </c:param>
 </c:url>
