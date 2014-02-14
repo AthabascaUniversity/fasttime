@@ -7,22 +7,27 @@
   <c:param name="format" value="JSON2"/>
 </c:url>
 
-<c:url var="aceGetWeeks" value="http://localhost:8080/fasttime/proxy/">
-  <c:param name="fct" value="getmyweeks"/>
-  <c:param name="format" value="JSON2"/>
-  <c:param name="approvalstatus" value="0"/>
-</c:url>
-
 <%
   Calendar dateFrom = Calendar.getInstance();
   Calendar dateTo = Calendar.getInstance();
   // start of week
   dateFrom.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
   // back one week, meaning two weeks total.
-  dateFrom.add(Calendar.DAY_OF_YEAR, -7);
+  dateFrom.add(Calendar.DAY_OF_YEAR, -14);
   request.setAttribute("dateFrom", dateFrom);
   request.setAttribute("dateTo", dateTo);
 %>
+
+
+<c:url var="aceGetWeeks" value="http://localhost:8080/fasttime/proxy/">
+  <c:param name="fct" value="getmyweeks"/>
+  <c:param name="format" value="JSON2"/>
+  <c:param name="approvalstatus" value="0"/>
+  <c:param name="filterdate">
+    <fmt:formatDate value="${dateTo.time}"
+                    pattern="yyyy-MM-dd"/>
+  </c:param>
+</c:url>
 
 <c:url var="aceGetWorkItems" value="http://localhost:8080/fasttime/proxy/">
   <c:param name="fct" value="getmyworkitems"/>
@@ -48,7 +53,9 @@
   <c:param name="fct" value="getprojects"/>
   <c:param name="accountid" value="athabascau"/>
   <c:param name="format" value="JSON2"/>
-  <c:param name="sortorder" value="PROJECT_NAME"/>
+  <c:param name="sortorder" value="project_name"/>
+  <c:param name="AssignedOnly" value="true"/>
+  <c:param name="UseShowHide" value="true"/>
 </c:url>
 
 <c:url var="aceGetTasks" value="http://localhost:8080/fasttime/proxy/">

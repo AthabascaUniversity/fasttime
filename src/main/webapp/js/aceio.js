@@ -191,7 +191,7 @@ var myWork = {
     load: function (workWeek)
     {
         for (i = 0; i < workWeek.results.length; i++)
-        {
+        {   // CRITICAL don't iterate through weeks, filter by dates.
             jQuery.ajax({
                 url: aceGetWorkItemsUrl,
                 data: 'guid=' + guid + '&timeperiodid=' +
