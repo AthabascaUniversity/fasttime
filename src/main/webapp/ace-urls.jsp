@@ -44,7 +44,7 @@
   <c:param name="approvalstatus" value="0"/>
   <c:param name="TimesheetDateFrom">
     <fmt:formatDate value="${dateFrom.time}"
-                    pattern="yyyy-MM-dd"/>
+                    pattern="yyyy-MM-dd'T'"/>
   </c:param>
   <c:param name="TimesheetDateTo">
     <fmt:formatDate value="${dateTo.time}"
@@ -77,6 +77,7 @@
   /*      <![CDATA[ */
 
   aceLoginInfoUrl = '${aceLoginInfo}';
+  aceGetWeeksUrl = '${aceGetWeeks}';
   aceGetMyWeeksUrl = '${aceGetMyWeeks}';
   aceGetWorkItemsUrl = '${aceGetWorkItems}';
   aceLoginUrl = '${aceLogin}';

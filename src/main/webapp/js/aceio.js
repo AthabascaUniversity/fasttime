@@ -4,6 +4,7 @@
 
 var aceLoginInfoUrl;
 var aceGetMyWeeksUrl;
+var aceGetWeeksUrl;
 var aceGetWorkItemsUrl;
 var aceLoginUrl;
 var aceGetProjectsUrl;
@@ -357,6 +358,17 @@ jQuery(document).ready(function ()
     jQuery(document).ajaxSuccess(function (event, XMLHttpRequest, ajaxOptions)
     {
         log('success: %o, %o, %o', event, XMLHttpRequest, ajaxOptions);
+        if (XMLHttpRequest.responseJSON !== undefined &&
+            XMLHttpRequest.responseJSON.status !== undefined &&
+            XMLHttpRequest.responseJSON.status == 'fail')
+        {
+            jQuery('#msg').show().append(
+                '<p>' +
+                    XMLHttpRequest.responseJSON.results[0].ERRORDESCRIPTION +
+                    '</p> '
+            );
+        }
+
         if (ajaxOptions.appendElement !== undefined)
         {
             /* Handle appending html response to an element */
@@ -366,11 +378,22 @@ jQuery(document).ready(function ()
 
     jQuery(document).ajaxError(function (event, jqXHR, settings, exception)
         {
-            if (jqXHR.responseJSON !== undefined)
+            switch (jqXHR.status)
             {
-                jQuery('#msg').show().append(
-                        '<p>' + jqXHR.responseJSON.exception +'</p> '
-                        );
+                case 500:
+                    jQuery('#msg').show().append(
+                        '<p>Error code ' + jqXHR.status + ' ' +
+                            jqXHR.statusText + ' ' +
+                            jqXHR.getResponseHeader('Warning') + '</p> '
+                    );
+                    break;
+                case 404:
+                    jQuery('#msg').show().append(
+                        '<p>Error code ' + jqXHR.status + ' ' +
+                            jqXHR.statusText + ' ' +
+                            jqXHR.getResponseHeader('Warning') + '</p> '
+                    );
+                    break;
             }
             log('error: %o, %o, %o', event, jqXHR, settings);
         }
