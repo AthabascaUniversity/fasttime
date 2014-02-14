@@ -38,6 +38,8 @@
       </div>
       <div id="content" class="fl-screenNavigator-scroll-container">
         <div>
+          <%-- The following is for error messages--%>
+          <div id="msg" class="errors" style="background-color: rgb(255, 238, 221);"></div>
           <jsp:include page="login.jsp"/>
           <jsp:include page="interface.jsp"/>
           <jsp:include page="sidebar.jsp"/>

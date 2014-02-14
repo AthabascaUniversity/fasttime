@@ -114,6 +114,7 @@ jQuery(document).ready(function ()
              orosLog('oros - fadein complete ' + new Date().getTime());
              });*/
             loadingDiv.show();
+            jQuery('#msg').hide();
             log('end ajaxStart ' + new Date().getTime());
         });
         jQuery(document).ajaxStop(function ()

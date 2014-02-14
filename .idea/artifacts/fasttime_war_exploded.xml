@@ -11,6 +11,7 @@
           <element id="library" level="project" name="Maven: javax.servlet:jstl:1.1.2" />
           <element id="library" level="project" name="Maven: taglibs:standard:1.1.2" />
           <element id="library" level="project" name="Maven: taglibs:log:1.0" />
+          <element id="library" level="project" name="Maven: com.googlecode.json-simple:json-simple:1.1" />
           <element id="library" level="project" name="Maven: org.mitre.dsmiley.httpproxy:smiley-http-proxy-servlet:1.4" />
           <element id="library" level="project" name="Maven: org.apache.httpcomponents:httpclient:4.2.5" />
           <element id="library" level="project" name="Maven: org.apache.httpcomponents:httpcore:4.2.4" />

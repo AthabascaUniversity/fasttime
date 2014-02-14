@@ -83,7 +83,7 @@ var projects = {
                                     url: aceGetTaskssUrl,
                                     data: 'guid=' + guid +
                                         '&projectId=' + $this.projectId +
-                                    '&FilterTaskCompleted=false',
+                                        '&FilterTaskCompleted=false',
                                     success: function (page, status, jqXHR)
                                     {
                                         log('ace tasks response: %o', page);
@@ -122,7 +122,7 @@ var projects = {
      * Loads the task combo box.
      * @param tasks
      */
-    loadTaskCombo: function(tasks)
+    loadTaskCombo: function (tasks)
     {
         var taskParameters = tasksToParameters(tasks);
         jQuery('#tasks option').remove();
@@ -366,6 +366,12 @@ jQuery(document).ready(function ()
 
     jQuery(document).ajaxError(function (event, jqXHR, settings, exception)
         {
+            if (jqXHR.responseJSON !== undefined)
+            {
+                jQuery('#msg').show().append(
+                        '<p>' + jqXHR.responseJSON.exception +'</p> '
+                        );
+            }
             log('error: %o, %o, %o', event, jqXHR, settings);
         }
     );
@@ -525,7 +531,7 @@ function tasksToParameters(ascArray)
     var parameters = '';
     for (var key in ascArray)
     {
-        if(typeof(ascArray[key]) == "function")
+        if (typeof(ascArray[key]) == "function")
         {
             continue;
         }

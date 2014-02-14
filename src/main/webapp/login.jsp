@@ -8,9 +8,6 @@
       not be stored on this site.
     </p>
 
-    <%-- The following is for error messages--%>
-    <div id="msg"></div>
-
     <div class="row fl-controls-left">
       <label for="username" class="fl-label">
         <span class="accesskey">U</span>ser ID:</label>
