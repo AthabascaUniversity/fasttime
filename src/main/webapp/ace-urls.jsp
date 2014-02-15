@@ -34,6 +34,11 @@
   <c:param name="format" value="JSON"/>
 </c:url>
 
+<c:url var="aceCreateWeek" value="http://localhost:8080/fasttime/proxy/">
+  <c:param name="fct" value="createweek"/>
+  <c:param name="format" value="JSON"/>
+</c:url>
+
 <c:url var="aceGetWorkItems" value="http://localhost:8080/fasttime/proxy/">
   <c:param name="fct" value="getmyworkitems"/>
   <c:param name="format" value="JSON"/>
@@ -82,6 +87,7 @@
   aceLoginInfoUrl = '${aceLoginInfo}';
   aceGetWeeksUrl = '${aceGetWeeks}';
   aceGetMyWeeksUrl = '${aceGetMyWeeks}';
+  aceCreateWeekUrl = '${aceCreateWeek}';
   aceSaveWorkItemUrl = '${aceSaveWorkItem}';
   aceGetWorkItemsUrl = '${aceGetWorkItems}';
   aceLoginUrl = '${aceLogin}';

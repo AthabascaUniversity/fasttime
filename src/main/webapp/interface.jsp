@@ -71,7 +71,22 @@
       {
         if (page.results.length == 0)
         {
-          log('no weeks available');
+          log('no weeks available, creating a new week');
+          jQuery.ajax({
+            url: aceCreateWeekUrl,
+            data: 'guid=' + guid + '&dateweekstart=' + date,
+            success: function (page, status, jqXHR)
+            {
+              week = convertObject(page.results[0], {
+                'weekStart': 'DATE_WEEK_START',
+                'weekEnd': 'DATE_WEEK_END',
+                'timeSheetPeriodId': 'TIMESHEET_PERIOD_ID'
+              });
+              week.weekStart = convertMSDateToDate(week.weekStart);
+              week.weekEnd = convertMSDateToDate(week.weekEnd);
+              aceSaveWork(date, projectId, taskId, hours, comments, week);
+            }
+          });
         }
         else
         {
@@ -80,6 +95,8 @@
             'weekEnd': 'DATE_WEEK_END',
             'timeSheetPeriodId': 'TIMESHEET_PERIOD_ID'
           });
+          week.weekStart = convertMSDateToDate(week.weekStart);
+          week.weekEnd = convertMSDateToDate(week.weekEnd);
           aceSaveWork(date, projectId, taskId, hours, comments, week);
         }
       }

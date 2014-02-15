@@ -5,6 +5,7 @@
 var aceLoginInfoUrl;
 var aceGetMyWeeksUrl;
 var aceGetWeeksUrl;
+var aceCreateWeekUrl;
 var aceSaveWorkItemUrl;
 var aceGetWorkItemsUrl;
 var aceLoginUrl;
@@ -217,14 +218,11 @@ var myWork = {
                             'comment': 'COMMENT'
                         });
 
-                        var workWeekStart =
-                            new Date(parseInt(/\/Date\((\d*)\)\//.exec(workItem.DATE_WEEK_START)[1]) +
-                                new Date().getTimezoneOffset() * 60 * 1000);
-                        newWorkItem['weekStart'] = workWeekStart;
-                        var workWeekEnd =
-                            new Date(parseInt(/\/Date\((\d*)\)\//.exec(workItem.DATE_WEEK_END)[1]) +
-                                new Date().getTimezoneOffset() * 60 * 1000);
-                        newWorkItem['weekEnd'] = workWeekEnd;
+
+                        newWorkItem['weekStart'] =
+                            convertMSDateToDate(workItem.DATE_WEEK_START);
+                        newWorkItem['weekEnd'] =
+                            convertMSDateToDate(workItem.DATE_WEEK_END);
                         newWorkItem['work'] = {
                             sun: workItem.TOTAL1,
                             mon: workItem.TOTAL2,
@@ -563,4 +561,11 @@ function tasksToParameters(ascArray)
         parameters += '&taskName=' + encodeURI(ascArray[key]['taskName']);
     }
     return parameters;
+}
+
+function convertMSDateToDate(msDate)
+{
+    var timeMs = parseInt(/\/Date\((\d*)\)\//.exec(msDate)[1]);
+    timeMs += new Date().getTimezoneOffset() * 60 * 1000;
+    return new Date(timeMs);
 }
