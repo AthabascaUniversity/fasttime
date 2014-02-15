@@ -10,7 +10,7 @@
           {
             jQuery('#projects').focus();
           }, autoSize: true,
-            dateFormat: "yy-M-dd"
+            dateFormat: "yy-mm-dd"
           });
         </ht:script>
       </td>
@@ -46,13 +46,43 @@
 
 <script type="text/javascript">
   /*      <![CDATA[ */
-  function aceSaveWork(date, projectId, taskId, hours, comments)
+  function aceSaveWork(date, projectId, taskId, hours, comments, week)
+  {
+    jQuery.ajax({
+      url: aceSaveWorkItemUrl,
+      data: 'guid=' + guid + '&timesheetperiodid=' + week.timeSheetPeriodId +
+        '&projectid=' + projectId + '&taskid=' + taskId +
+        '&hoursday1=' + hours + '&comments=' + comments + '&timetypeid=1',
+      success: function (page, status, jqXHR)
+      {
+        log('savework results: %o', page);
+      }
+    });
+  }
+
+  function aceSaveWorkGetWeek(date, projectId, taskId, hours, comments)
   {
     log('saving values %s, %s, %s, %s, %s', date, projectId, taskId, hours,
       comments);
     jQuery.ajax({
       url: aceGetWeeksUrl,
-      data: 'guid=' + guid
+      data: 'guid=' + guid + '&filterdate=' + date,
+      success: function (page, status, jqXHR)
+      {
+        if (page.results.length == 0)
+        {
+          log('no weeks available');
+        }
+        else
+        {
+          week = convertObject(page.results[0], {
+            'weekStart': 'DATE_WEEK_START',
+            'weekEnd': 'DATE_WEEK_END',
+            'timeSheetPeriodId': 'TIMESHEET_PERIOD_ID'
+          });
+          aceSaveWork(date, projectId, taskId, hours, comments, week);
+        }
+      }
     });
   }
 
@@ -82,7 +112,8 @@
           var tasks = jQuery('#tasks');
           var hours = jQuery('#hours');
           var comments = jQuery('#comments');
-          aceSaveWork(date.val(), projectsCombo.val(), tasks.val(), hours.val(),
+          aceSaveWorkGetWeek(date.val(), projectsCombo.val(), tasks.val(),
+            hours.val(),
             comments.val());
         }
       );

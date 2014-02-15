@@ -32,10 +32,6 @@
 <c:url var="aceGetWeeks" value="http://localhost:8080/fasttime/proxy/">
   <c:param name="fct" value="getweeks"/>
   <c:param name="format" value="JSON"/>
-  <c:param name="filterdate">
-    <fmt:formatDate value="${dateTo.time}"
-                    pattern="yyyy-MM-dd"/>
-  </c:param>
 </c:url>
 
 <c:url var="aceGetWorkItems" value="http://localhost:8080/fasttime/proxy/">
@@ -73,12 +69,20 @@
   <c:param name="format" value="JSON"/>
 </c:url>
 
+<c:url var="aceSaveWorkItem" value="http://localhost:8080/fasttime/proxy/">
+  <c:param name="fct" value="saveworkitem"/>
+  <c:param name="accountid" value="athabascau"/>
+  <c:param name="format" value="JSON"/>
+</c:url>
+
+
 <script type="text/javascript">
   /*      <![CDATA[ */
 
   aceLoginInfoUrl = '${aceLoginInfo}';
   aceGetWeeksUrl = '${aceGetWeeks}';
   aceGetMyWeeksUrl = '${aceGetMyWeeks}';
+  aceSaveWorkItemUrl = '${aceSaveWorkItem}';
   aceGetWorkItemsUrl = '${aceGetWorkItems}';
   aceLoginUrl = '${aceLogin}';
   aceGetProjectsUrl = '${aceGetProjects}';

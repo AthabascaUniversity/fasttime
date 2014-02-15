@@ -5,6 +5,7 @@
 var aceLoginInfoUrl;
 var aceGetMyWeeksUrl;
 var aceGetWeeksUrl;
+var aceSaveWorkItemUrl;
 var aceGetWorkItemsUrl;
 var aceLoginUrl;
 var aceGetProjectsUrl;
