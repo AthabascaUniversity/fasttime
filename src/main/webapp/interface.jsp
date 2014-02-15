@@ -48,11 +48,14 @@
   /*      <![CDATA[ */
   function aceSaveWork(date, projectId, taskId, hours, comments, week)
   {
+    var jsDate = new Date(date);
+    var hoursDay = '&hoursday' + (jsDate.getUTCDay()+ 1) + '=' + hours;
+
     jQuery.ajax({
       url: aceSaveWorkItemUrl,
       data: 'guid=' + guid + '&timesheetperiodid=' + week.timeSheetPeriodId +
         '&projectid=' + projectId + '&taskid=' + taskId +
-        '&hoursday1=' + hours + '&comments=' + comments + '&timetypeid=1',
+        hoursDay + '&comments=' + comments + '&timetypeid=1',
       success: function (page, status, jqXHR)
       {
         log('savework results: %o', page);
