@@ -59,6 +59,7 @@
       success: function (page, status, jqXHR)
       {
         log('savework results: %o', page);
+        myWork.loadWeeks();
       }
     });
   }

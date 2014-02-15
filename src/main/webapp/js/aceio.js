@@ -193,8 +193,10 @@ var myWork = {
      */
     load: function (workWeek)
     {
+        // clear the time in the table before reloading it
+        jQuery('#time td').remove();
         for (i = 0; i < workWeek.results.length; i++)
-        {   // CRITICAL don't iterate through weeks, filter by dates.
+        {
             jQuery.ajax({
                 url: aceGetWorkItemsUrl,
                 data: 'guid=' + guid + '&timeperiodid=' +
@@ -232,7 +234,7 @@ var myWork = {
                             fri: workItem.TOTAL6,
                             sat: workItem.TOTAL7,
                             total: workItem.TOTAL
-                        }
+                        };
 
                         if (0 != newWorkItem.timeSheetLineId)
                         { // only *real* time items, not the predicted ones.
