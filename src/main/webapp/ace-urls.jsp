@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<c:url var="aceLoginInfo" value="/proxy/">
+<c:url var="aceLoginInfo" value="https://api.aceproject.com/">
   <c:param name="fct" value="getlogininfo"/>
   <c:param name="format" value="JSON"/>
 </c:url>
@@ -19,7 +19,7 @@
 %>
 
 
-<c:url var="aceGetMyWeeks" value="/proxy/">
+<c:url var="aceGetMyWeeks" value="https://api.aceproject.com/">
   <c:param name="fct" value="getmyweeks"/>
   <c:param name="format" value="JSON"/>
   <c:param name="approvalstatus" value="0"/>
@@ -29,17 +29,17 @@
   </c:param>--%>
 </c:url>
 
-<c:url var="aceGetWeeks" value="/proxy/">
+<c:url var="aceGetWeeks" value="https://api.aceproject.com/">
   <c:param name="fct" value="getweeks"/>
   <c:param name="format" value="JSON"/>
 </c:url>
 
-<c:url var="aceCreateWeek" value="/proxy/">
+<c:url var="aceCreateWeek" value="https://api.aceproject.com/">
   <c:param name="fct" value="createweek"/>
   <c:param name="format" value="JSON"/>
 </c:url>
 
-<c:url var="aceGetWorkItems" value="/proxy/">
+<c:url var="aceGetWorkItems" value="https://api.aceproject.com/">
   <c:param name="fct" value="getmyworkitems"/>
   <c:param name="format" value="JSON"/>
   <c:param name="approvalstatus" value="0"/>
@@ -53,13 +53,13 @@
   </c:param>--%>
 </c:url>
 
-<c:url var="aceLogin" value="/proxy/">
+<c:url var="aceLogin" value="https://api.aceproject.com/">
   <c:param name="fct" value="login"/>
   <c:param name="accountid" value="athabascau"/>
   <c:param name="format" value="JSON"/>
 </c:url>
 
-<c:url var="aceGetProjects" value="/proxy/">
+<c:url var="aceGetProjects" value="https://api.aceproject.com/">
   <c:param name="fct" value="getprojects"/>
   <c:param name="accountid" value="athabascau"/>
   <c:param name="format" value="JSON"/>
@@ -68,13 +68,13 @@
   <c:param name="UseShowHide" value="true"/>
 </c:url>
 
-<c:url var="aceGetTasks" value="/proxy/">
+<c:url var="aceGetTasks" value="https://api.aceproject.com/">
   <c:param name="fct" value="gettasks"/>
   <c:param name="accountid" value="athabascau"/>
   <c:param name="format" value="JSON"/>
 </c:url>
 
-<c:url var="aceSaveWorkItem" value="/proxy/">
+<c:url var="aceSaveWorkItem" value="https://api.aceproject.com/">
   <c:param name="fct" value="saveworkitem"/>
   <c:param name="accountid" value="athabascau"/>
   <c:param name="format" value="JSON"/>
