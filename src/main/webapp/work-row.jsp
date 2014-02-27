@@ -65,7 +65,7 @@
         event.preventDefault();
       });
 
-    jQuery('#commentdiv-${timeSheetLineId}').focusout(
+    jQuery('#commentdiv-${timeSheetLineId}').unbind('focusout.comment').bind('focusout.comment',
       function (event)
       {
         log('comment blurred');
