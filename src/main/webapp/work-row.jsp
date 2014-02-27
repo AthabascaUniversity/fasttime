@@ -40,14 +40,14 @@
   <td>${fri}</td>
   <td>${sat}</td>
   <td>
-    <a href="" id="icon-${timeSheetLineId}">
-      <img src="<c:url value="/images/blue-arrow.jpg"/>"/>
-    </a>
+    <div id="comments-displayed-${timeSheetLineId}" style="display: inline;">
+      ${comment}
+    </div>
 
-    <div id="comment-${timeSheetLineId}" style="display: none;">
+    <div id="commentdiv-${timeSheetLineId}" style="display: none;">
       <label for="comments-${timeSheetLineId}"></label>
       <textarea id="comments-${timeSheetLineId}" name="comments"
-                cols="30" rows="2">${comment}</textarea>
+                cols="50" rows="3">${comment}</textarea>
     </div>
   </td>
 </tr>
@@ -55,12 +55,25 @@
   /*      <![CDATA[ */
   jQuery(document).ready(function ()
   {
-    jQuery('#icon-${timeSheetLineId}').unbind('click.comment').bind('click.comment',
+    jQuery('#comments-displayed-${timeSheetLineId}').unbind('click.comment').bind('click.comment',
       function (event)
       {
         log('comment click');
-        jQuery("#comment-${timeSheetLineId}").center();
-        jQuery("#comment-${timeSheetLineId}").show();
+        jQuery("#comments-displayed-${timeSheetLineId}").hide();
+        jQuery("#commentdiv-${timeSheetLineId}").show();
+        jQuery("#comments-${timeSheetLineId}").focus();
+        event.preventDefault();
+      });
+
+    jQuery('#commentdiv-${timeSheetLineId}').focusout(
+      function (event)
+      {
+        log('comment blurred');
+        var displayed = jQuery("#comments-displayed-${timeSheetLineId}");
+        var textBox = jQuery("#comments-${timeSheetLineId}");
+        displayed.val(textBox.val());
+        displayed.show();
+        jQuery('#commentdiv-${timeSheetLineId}').hide();
         event.preventDefault();
       });
   });
