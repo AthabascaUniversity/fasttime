@@ -13,7 +13,7 @@
   // start of week
   dateFrom.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
   // back one week, meaning two weeks total.
-  dateFrom.add(Calendar.DAY_OF_YEAR, -14);
+//  dateFrom.add(Calendar.DAY_OF_YEAR, -14);
   request.setAttribute("dateFrom", dateFrom);
   request.setAttribute("dateTo", dateTo);
 %>
@@ -43,14 +43,14 @@
   <c:param name="fct" value="getmyworkitems"/>
   <c:param name="format" value="JSON"/>
   <c:param name="approvalstatus" value="0"/>
-<%--  <c:param name="TimesheetDateFrom">
+  <c:param name="TimesheetDateFrom">
     <fmt:formatDate value="${dateFrom.time}"
                     pattern="yyyy-MM-dd"/>
   </c:param>
   <c:param name="TimesheetDateTo">
     <fmt:formatDate value="${dateTo.time}"
                     pattern="yyyy-MM-dd"/>
-  </c:param>--%>
+  </c:param>
 </c:url>
 
 <c:url var="aceLogin" value="https://api.aceproject.com/">

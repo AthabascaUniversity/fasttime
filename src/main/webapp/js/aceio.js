@@ -236,8 +236,10 @@ var myWork = {
                             total: workItem.TOTAL
                         };
 
-                        if (0 != newWorkItem.timeSheetLineId)
-                        { // only *real* time items, not the predicted ones.
+                        if (0 != newWorkItem.timeSheetLineId &&
+                            0 == newWorkItem.approvalStatusId)
+                        { // only *real* time items, not the predicted ones, and
+                            //
                             myWork.list.push(newWorkItem);
                             jQuery.ajax(
                                 {   // global ajaxSuccess handles append.
