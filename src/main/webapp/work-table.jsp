@@ -45,7 +45,6 @@
       "weekStart")));
     request.setAttribute("weekStart", weekStart);
   %>
-
   <tr>
     <td>
       <fmt:formatDate value="${weekStart.time}"
@@ -62,11 +61,44 @@
     <td>${fri}</td>
     <td>${sat}</td>
     <td>
-      <div id="comment-${timeSheetLineId}">
+      <div id="comments-displayed-${timeSheetLineId}" style="display: inline;">
+          ${comment}
+      </div>
+
+      <div id="commentdiv-${timeSheetLineId}" style="display: none;">
         <label for="comments-${timeSheetLineId}"></label>
         <textarea id="comments-${timeSheetLineId}" name="comments"
-                  cols="30" rows="2">${comment}</textarea>
+                  cols="50" rows="3">${comment}</textarea>
       </div>
+
+      <script type="text/javascript">
+        /*      <![CDATA[ */
+        jQuery(document).ready(function ()
+        {
+          jQuery('#comments-displayed-${timeSheetLineId}').unbind('click.comment').bind('click.comment',
+            function (event)
+            {
+              log('comment click');
+              jQuery("#comments-displayed-${timeSheetLineId}").hide();
+              jQuery("#commentdiv-${timeSheetLineId}").show();
+              jQuery("#comments-${timeSheetLineId}").focus();
+              event.preventDefault();
+            });
+
+          jQuery('#commentdiv-${timeSheetLineId}').unbind('focusout.comment').bind('focusout.comment',
+            function (event)
+            {
+              log('comment blurred');
+              var displayed = jQuery("#comments-displayed-${timeSheetLineId}");
+              var textBox = jQuery("#comments-${timeSheetLineId}");
+              displayed.val(textBox.val());
+              displayed.show();
+              jQuery('#commentdiv-${timeSheetLineId}').hide();
+              event.preventDefault();
+            });
+        });
+        /*      ]]> */
+      </script>
     </td>
   </tr>
   <c:if test="${status.last}">

@@ -14,27 +14,27 @@ var aceGetTaskssUrl;
 
 var guid;
 
-function getRowUrl(newWorkItem)
+function getRowParams(newWorkItem)
 {
-    var workRowUrl = './work-row.jsp?' +
+    var workRowUrl =
         'statusId=' +
-        encodeURI(newWorkItem.approvalStatusId) +
-        '&statusName=' +
-        encodeURI(newWorkItem.approvalStatusName) +
-        '&weekStart=' +
-        newWorkItem.weekStart.getTime() +
-        '&projectId=' +
-        encodeURI(newWorkItem.projectId) +
-        '&projectName=' +
-        encodeURI(newWorkItem.projectName) +
-        '&taskId=' +
-        encodeURI(newWorkItem.taskId) +
-        '&taskName=' +
-        encodeURI(newWorkItem.taskName) +
-        '&timeSheetLineId=' +
-        encodeURI(newWorkItem.timeSheetLineId) +
-        '&comment=' +
-        encodeURI(newWorkItem.comment);
+            encodeURI(newWorkItem.approvalStatusId) +
+            '&statusName=' +
+            encodeURI(newWorkItem.approvalStatusName) +
+            '&weekStart=' +
+            newWorkItem.weekStart.getTime() +
+            '&projectId=' +
+            encodeURI(newWorkItem.projectId) +
+            '&projectName=' +
+            encodeURI(newWorkItem.projectName) +
+            '&taskId=' +
+            encodeURI(newWorkItem.taskId) +
+            '&taskName=' +
+            encodeURI(newWorkItem.taskName) +
+            '&timeSheetLineId=' +
+            encodeURI(newWorkItem.timeSheetLineId) +
+            '&comment=' +
+            encodeURI(newWorkItem.comment);
 
     workRowUrl += '&sun=' + newWorkItem.work.sun;
     workRowUrl += '&mon=' + newWorkItem.work.mon;
@@ -194,7 +194,7 @@ var myWork = {
     load: function (workWeek)
     {
         // clear the time in the table before reloading it
-        jQuery('#time td').remove();
+//        jQuery('#time td').remove();
         for (i = 0; i < workWeek.results.length; i++)
         {
             jQuery.ajax({
@@ -205,7 +205,7 @@ var myWork = {
                 success: function (page, status, jqXHR)
                 {
                     log('my work items: %o', page);
-                    for (i = 0; i < page.results.length; i++)
+                    for (var i = 0; i < page.results.length; i++)
                     {
                         var workItem = page.results[i];
                         var newWorkItem = convertObject(workItem, {
@@ -241,11 +241,6 @@ var myWork = {
                         { // only *real* time items, not the predicted ones, and
                             //
                             myWork.list.push(newWorkItem);
-                            jQuery.ajax(
-                                {   // global ajaxSuccess handles append.
-                                    url: getRowUrl(newWorkItem),
-                                    appendElement: '#time'
-                                });
                         }
                     }
                 },
@@ -262,8 +257,36 @@ var myWork = {
         /* CRITICAL We could iterate through this list, to find a project and work
          * item that matches the time frame, and just add to it's hours for the
          * day of the week, as well as the comment. */
-        if (0 < myWork.list.length)
+        if (0 < myWork.list.length && ajaxOptions !== undefined &&
+            ajaxOptions.workLoad !== undefined &&
+            ajaxOptions.workLoad)
         {
+            var tableData = '';
+
+            for (var i = 0; i < myWork.list.length; i++)
+            {
+                if (i > 0)
+                {
+                    tableData += '&';
+                }
+                tableData += getRowParams(myWork.list[i]);
+            }
+
+            log('tableData: %s', tableData);
+
+            jQuery.ajax(
+                {
+                    url: './work-table.jsp',
+                    data: tableData,
+                    type: 'post',
+                    workLoad: true,
+                    success: function (page, status, jqXHR)
+                    {
+                        log('replacing #time with %s', page);
+                        jQuery('#time').replaceWith(page);
+                    }
+                }
+            );
             jQuery('#work').show();
         }
     },
@@ -352,7 +375,7 @@ function aceIOError(jqXHR, textStatus, errorThrown)
 
 jQuery(document).ready(function ()
 {
-    jQuery(document).ajaxStop(function (event, XMLHttpRequest, ajaxOptions)
+    jQuery(document).ajaxStop(function ()
     {
         myWork.ajaxStop();
     });

@@ -23,10 +23,10 @@
   <c:param name="fct" value="getmyweeks"/>
   <c:param name="format" value="JSON"/>
   <c:param name="approvalstatus" value="0"/>
-<%--  <c:param name="filterdate">
+  <c:param name="filterdate">
     <fmt:formatDate value="${dateTo.time}"
                     pattern="yyyy-MM-dd"/>
-  </c:param>--%>
+  </c:param>
 </c:url>
 
 <c:url var="aceGetWeeks" value="https://api.aceproject.com/">
