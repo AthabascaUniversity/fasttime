@@ -14,6 +14,8 @@ var aceGetTaskssUrl;
 
 var guid;
 
+var workItemCount = 0;
+
 function getRowParams(newWorkItem)
 {
     var workRowUrl =
@@ -195,9 +197,10 @@ var myWork = {
     {
         // clear the time in the table before reloading it
 //        jQuery('#time td').remove();
+        var myAjaxCalls = [];
         for (i = 0; i < workWeek.results.length; i++)
         {
-            jQuery.ajax({
+            myAjaxCalls.push(jQuery.ajax({
                 url: aceGetWorkItemsUrl,
                 data: 'guid=' + guid + '&timeperiodid=' +
                     workWeek.results[i].TIMESHEET_PERIOD_ID,
@@ -248,47 +251,43 @@ var myWork = {
                 {
                     aceIOError(jqXHR, textStatus, errorThrown);
                 }
-            });
+            }));
         }
+
+        jQuery.when.apply(jQuery, myAjaxCalls).done( function () {
+                var tableData = '';
+
+                for (var i = 0; i < myWork.list.length; i++)
+                {
+                    if (i > 0)
+                    {
+                        tableData += '&';
+                    }
+                    tableData += getRowParams(myWork.list[i]);
+                }
+
+                workItemCount++;
+                log('tableData: %s', tableData);
+
+                jQuery.ajax(
+                    {
+                        url: './work-table.jsp',
+                        data: tableData,
+                        type: 'post',
+                        workLoad: true,
+                        success: function (page, status, jqXHR)
+                        {
+//                                log('replacing #time with %s', page);
+                            jQuery('#time').replaceWith(page);
+                        }
+                    }
+                );
+                jQuery('#work').show();
+            }
+        );
     },
     ajaxStop: function ()
     {
-        log('work list: %o', myWork.list);
-        /* CRITICAL We could iterate through this list, to find a project and work
-         * item that matches the time frame, and just add to it's hours for the
-         * day of the week, as well as the comment. */
-        if (0 < myWork.list.length && ajaxOptions !== undefined &&
-            ajaxOptions.workLoad !== undefined &&
-            ajaxOptions.workLoad)
-        {
-            var tableData = '';
-
-            for (var i = 0; i < myWork.list.length; i++)
-            {
-                if (i > 0)
-                {
-                    tableData += '&';
-                }
-                tableData += getRowParams(myWork.list[i]);
-            }
-
-            log('tableData: %s', tableData);
-
-            jQuery.ajax(
-                {
-                    url: './work-table.jsp',
-                    data: tableData,
-                    type: 'post',
-                    workLoad: true,
-                    success: function (page, status, jqXHR)
-                    {
-                        log('replacing #time with %s', page);
-                        jQuery('#time').replaceWith(page);
-                    }
-                }
-            );
-            jQuery('#work').show();
-        }
     },
     list: [
         {
@@ -513,7 +512,7 @@ function convertObject(inObject, mapping)
         outObject[key] = inObject[mapping[key]];
     }
 
-    log('mapped object: %o', outObject);
+//    log('mapped object: %o', outObject);
     return outObject;
 }
 
