@@ -20,6 +20,7 @@
   <c:set var="thu" value="${paramValues['thu'][status.index]}"/>
   <c:set var="fri" value="${paramValues['fri'][status.index]}"/>
   <c:set var="sat" value="${paramValues['sat'][status.index]}"/>
+  <c:set var="total" value="${paramValues['total'][status.index]}"/>
 
   <c:if test="${status.first}">
     <table class="debugtable border" id="time">
@@ -36,6 +37,7 @@
       <th>Fri</th>
       <th>Sat</th>
       <th>Notes</th>
+      <th>Total</th>
     </tr>
   </c:if>
 
@@ -100,6 +102,7 @@
         /*      ]]> */
       </script>
     </td>
+    <td>${total}</td>
   </tr>
   <c:if test="${status.last}">
     </table>

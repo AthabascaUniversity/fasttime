@@ -36,7 +36,9 @@ function getRowParams(newWorkItem)
             '&timeSheetLineId=' +
             encodeURI(newWorkItem.timeSheetLineId) +
             '&comment=' +
-            encodeURI(newWorkItem.comment);
+            encodeURI(newWorkItem.comment) +
+            '&total=' +
+            encodeURI(newWorkItem.work.total);
 
     workRowUrl += '&sun=' + newWorkItem.work.sun;
     workRowUrl += '&mon=' + newWorkItem.work.mon;
@@ -207,7 +209,7 @@ var myWork = {
                 workListGenerator: true,
                 success: function (page, status, jqXHR)
                 {
-                    log('my work items: %o', page);
+                    log('raw work items: %o', page);
                     for (var i = 0; i < page.results.length; i++)
                     {
                         var workItem = page.results[i];
@@ -255,6 +257,7 @@ var myWork = {
         }
 
         jQuery.when.apply(jQuery, myAjaxCalls).done( function () {
+                log('my work items: %o', myWork.list);
                 var tableData = '';
 
                 for (var i = 0; i < myWork.list.length; i++)
@@ -285,9 +288,6 @@ var myWork = {
                 jQuery('#work').show();
             }
         );
-    },
-    ajaxStop: function ()
-    {
     },
     list: [
         {
@@ -374,11 +374,6 @@ function aceIOError(jqXHR, textStatus, errorThrown)
 
 jQuery(document).ready(function ()
 {
-    jQuery(document).ajaxStop(function ()
-    {
-        myWork.ajaxStop();
-    });
-
     jQuery(document).ajaxSuccess(function (event, XMLHttpRequest, ajaxOptions)
     {
         log('success: %o, %o, %o', event, XMLHttpRequest, ajaxOptions);
