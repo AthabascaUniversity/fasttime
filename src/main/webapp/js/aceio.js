@@ -256,7 +256,13 @@ var myWork = {
             }));
         }
 
-        jQuery.when.apply(jQuery, myAjaxCalls).done( function () {
+        /**
+         * when() accepts multiple ajax objects, and calls done once after
+         * all of them have completed.  This ensure the load process is
+         * entirely complete.
+         */
+        jQuery.when.apply(jQuery, myAjaxCalls).done(function ()
+            {
                 log('my work items: %o', myWork.list);
                 var tableData = '';
 
@@ -269,7 +275,6 @@ var myWork = {
                     tableData += getRowParams(myWork.list[i]);
                 }
 
-                workItemCount++;
                 log('tableData: %s', tableData);
 
                 jQuery.ajax(
@@ -277,10 +282,8 @@ var myWork = {
                         url: './work-table.jsp',
                         data: tableData,
                         type: 'post',
-                        workLoad: true,
                         success: function (page, status, jqXHR)
                         {
-//                                log('replacing #time with %s', page);
                             jQuery('#time').replaceWith(page);
                         }
                     }
