@@ -35,7 +35,7 @@
       <%--      <td time_type_id="1">Regular&nbsp;</td>--%>
       <td style="white-space:nowrap"> &nbsp;
         <%--<label for="comment">Comment</label>--%>
-        <textarea name="comments" id="comments" rows="1"></textarea>
+        <textarea name="comments" id="comments" style="width: 40em;" rows="3"></textarea>
       </td>
       <td>
         <input type="submit" id="save" value="Save"/>
