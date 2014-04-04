@@ -214,8 +214,8 @@ var myWork = {
                     {
                         var workItem = page.results[i];
                         var newWorkItem = convertObject(workItem, {
-                            'approvalStatusId': 'APPROVAL_STATUS',
-                            'approvalStatusName': 'APPROVAL_STATUS_NAME',
+                            'approvalStatusId': 'APPROVAL_LEVEL',
+                            'approvalStatusName': 'GLOBAL_APPROVAL_STATUS',
                             'projectId': 'PROJECT_ID',
                             'projectName': 'PROJECT_NAME',
                             'taskId': 'TASK_ID',
@@ -228,6 +228,7 @@ var myWork = {
 
                         newWorkItem['weekStart'] =
                             convertMSDateToDate(workItem.DATE_WEEK_START);
+
                         newWorkItem['weekEnd'] =
                             convertMSDateToDate(workItem.DATE_WEEK_END);
                         newWorkItem['work'] = {
@@ -241,10 +242,9 @@ var myWork = {
                             total: workItem.TOTAL
                         };
 
-                        if (0 != newWorkItem.timeSheetLineId &&
-                            0 == newWorkItem.approvalStatusId)
+                        if (0 != newWorkItem.timeSheetLineId)
                         { // only *real* time items, not the predicted ones, and
-                            //
+                            log('converted work item: %o', newWorkItem);
                             myWork.list.push(newWorkItem);
                         }
                     }
@@ -506,7 +506,7 @@ function convertObject(inObject, mapping)
     var outObject = {};
     for (var key in mapping)
     {
-//        log('mapping: %s = %s, %o', key, mapping[key], inObject[mapping[key]]);
+        log('mapping: %s = %s, %o', key, mapping[key], inObject[mapping[key]]);
         outObject[key] = inObject[mapping[key]];
     }
 

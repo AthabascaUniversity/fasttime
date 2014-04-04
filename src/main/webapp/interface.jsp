@@ -53,7 +53,7 @@
 
     jQuery.ajax({
       url: aceSaveWorkItemUrl,
-      data: 'guid=' + guid + '&timesheetperiodid=' + week.timeSheetPeriodId +
+      data: 'guid=' + guid + '&weekStart=' + week.weekStart.toISOString() +
         '&projectid=' + projectId + '&taskid=' + taskId +
         hoursDay + '&comments=' + comments + '&timetypeid=1',
       success: function (page, status, jqXHR)
