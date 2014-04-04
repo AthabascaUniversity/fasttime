@@ -98,7 +98,8 @@ var projects = {
                                             convertArrayOfObjects(page.results,
                                                 {
                                                     taskId: 'TASK_ID',
-                                                    taskName: 'TASK_RESUME'
+                                                    taskName: 'TASK_RESUME',
+                                                    taskDescription: 'TASK_DESC_CREATOR'
                                                 }, 'taskId');
                                         $this.tasks.loadCombo = function ()
                                         {
@@ -582,7 +583,10 @@ function tasksToParameters(ascArray)
         }
         parameters += '&';
         parameters += 'taskId=' + encodeURI(ascArray[key]['taskId']);
-        parameters += '&taskName=' + encodeURI(ascArray[key]['taskName']);
+        parameters += '&taskName-' + encodeURI(ascArray[key]['taskId']) +
+            '=' + encodeURI(ascArray[key]['taskName']);
+        parameters += '&taskDescription-' + encodeURI(ascArray[key]['taskId']) +
+            '=' + encodeURI(ascArray[key]['taskDescription']);
     }
     return parameters;
 }
