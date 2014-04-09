@@ -60,6 +60,7 @@
       {
         log('savework results: %o', page);
         myWork.loadWeeks();
+        $('#comments').val('');
       }
     });
   }
