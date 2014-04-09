@@ -15,6 +15,7 @@ function log()
     };
 
     console.log.apply(console, arguments);
+// CRITICAL    console.log.call(console, 'stack: %o', new Error().stack);
 }
 
 
