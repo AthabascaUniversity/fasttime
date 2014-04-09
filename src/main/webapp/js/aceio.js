@@ -565,9 +565,12 @@ function projectsToParameters(ascArray)
     var parameters = '';
     for (var key in ascArray)
     {
+        var projectId = ascArray[key]['projectId'];
+        var projectName = ascArray[key]['projectName'];
         parameters += '&';
-        parameters += 'projectId=' + encodeURI(ascArray[key]['projectId']);
-        parameters += '&projectName=' + encodeURI(ascArray[key]['projectName']);
+        parameters += 'projectId=' + encodeURIComponent(projectId);
+        parameters += '&' + 'projectName-' + projectId + '=' +
+            encodeURIComponent(projectName);
     }
     return parameters;
 }
