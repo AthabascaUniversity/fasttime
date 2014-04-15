@@ -505,10 +505,18 @@ function testCall(queryUrl)
 function convertObject(inObject, mapping)
 {
     var outObject = {};
-    for (var key in mapping)
+    if (mapping === undefined)
+    {   // there is no mapping, just copy.
+        outObject = inObject;
+    }
+    else
     {
-        log('mapping: %s = %s, %o', key, mapping[key], inObject[mapping[key]]);
-        outObject[key] = inObject[mapping[key]];
+        for (var key in mapping)
+        {
+            log('mapping: %s = %s, %o', key, mapping[key],
+                inObject[mapping[key]]);
+            outObject[key] = inObject[mapping[key]];
+        }
     }
 
 //    log('mapped object: %o', outObject);
@@ -536,15 +544,30 @@ function convertObject(inObject, mapping)
  *
  * @returns {Array}
  */
-function convertArrayOfObjects(inArray, mapping, keyMapping)
+function convertArrayOfObjects(inArray, mapping, keyMapping, comparator)
 {
     var outArray;
     if (keyMapping === undefined)
     {   // convert as straight array.
         outArray = [];
-        for (var i = 0; i < inArray.length; i++)
+
+        if (inArray instanceof Object)
+        {   // assume associative array.
+            for (var key in inArray)
+            {
+                outArray.push(convertObject(inArray[key], mapping));
+            }
+            if (comparator !== undefined)
+            {
+                outArray.sort(comparator);
+            }
+        }
+        else if (inArray instanceof Array)
         {
-            outArray[i] = convertObject(inArray[i], mapping);
+            for (var i = 0; i < inArray.length; i++)
+            {
+                outArray[i] = convertObject(inArray[i], mapping);
+            }
         }
     }
     else
@@ -560,13 +583,24 @@ function convertArrayOfObjects(inArray, mapping, keyMapping)
     return outArray;
 }
 
+function projectCompare(a, b)
+{
+    if (a.projectName < b.projectName)
+        return -1;
+    if (a.projectName > b.projectName)
+        return 1;
+    return 0;
+}
+
 function projectsToParameters(ascArray)
 {
     var parameters = '';
-    for (var key in ascArray)
+    var projectList = convertArrayOfObjects(ascArray, undefined, undefined,
+        projectCompare)
+    for (var key = 0; key < projectList.length; key++)
     {
-        var projectId = ascArray[key]['projectId'];
-        var projectName = ascArray[key]['projectName'];
+        var projectId = projectList[key]['projectId'];
+        var projectName = projectList[key]['projectName'];
         parameters += '&';
         parameters += 'projectId=' + encodeURIComponent(projectId);
         parameters += '&' + 'projectName-' + projectId + '=' +
