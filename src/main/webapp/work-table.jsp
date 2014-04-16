@@ -1,8 +1,10 @@
 <%@ page import="java.util.Calendar" %>
+<%@ page import="org.json.simple.parser.JSONParser" %>
 <%@ page errorPage="json-error.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
+<%-- CRITICAL supposedly query parameter order is not guaranteed.  We need to
+transform this into a web service. --%>
 <c:forEach items="${paramValues['statusId']}" var="statusId"
            varStatus="status">
   <c:set var="statusName" value="${paramValues['statusName'][status.index]}"/>

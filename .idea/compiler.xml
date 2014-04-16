@@ -25,6 +25,9 @@
         <module name="fasttime" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="fasttime" target="1.6" />
+    </bytecodeTargetLevel>
   </component>
 </project>
 
