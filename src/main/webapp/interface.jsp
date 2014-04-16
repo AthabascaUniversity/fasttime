@@ -112,18 +112,19 @@
     function ()
     {
       var projectsCombo = jQuery('#projects');
+      // hook the project drop down
       projectsCombo.unbind('change.project').bind('change.project',
         function (event)
         {
           if (projects.list[projectsCombo.val()] !== undefined)
-          {
+          { // load the tasks for the project selected
             projects.list['' + projectsCombo.val()].getTasks(function (tasks)
             {
               tasks.loadCombo();
             });
           }
           else
-          {
+          { // clear the tasks, as a project is no longer selected.
             jQuery('#tasks option').remove();
           }
         });
