@@ -1,10 +1,8 @@
 package com.github.trentonadams;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 /**
  * Created by IntelliJ IDEA.
@@ -18,22 +16,31 @@ import javax.ws.rs.core.MediaType;
  * @author Trenton D. Adams
  */
 
-@Path("working")
+@Path("work")
 public class Work
 {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/json")
-    public Data isWorkingJson()
+    public WorkList isWorkingJson()
     {
-        return new Data().setWorking(true);
+        return new WorkList();
     }
 
     @GET
     @Produces(MediaType.APPLICATION_XML)
     @Path("/xml")
-    public Data isWorkingXml()
+    public WorkList isWorkingXml()
     {
-        return new Data().setWorking(true);
+        return new WorkList();
+    }
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/post")
+    public Response showWork(final WorkList workList)
+    {
+        System.out.println(workList);
+        return Response.ok(Boolean.TRUE).build();
     }
 }

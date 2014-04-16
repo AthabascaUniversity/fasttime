@@ -275,8 +275,8 @@ var myWork = {
                     }
                     tableData += getRowParams(myWork.list[i]);
                 }
-/*                tableData += '&json=' + encodeURIComponent(
-                    JSON.stringify(myWork.list, null, " "));*/
+                /*                tableData += '&json=' + encodeURIComponent(
+                 JSON.stringify(myWork.list, null, " "));*/
 
                 log('tableData: %s', tableData);
 
@@ -622,10 +622,12 @@ function tasksToParameters(ascArray)
         }
         parameters += '&';
         parameters += 'taskId=' + encodeURIComponent(ascArray[key]['taskId']);
-        parameters += '&taskName-' + encodeURIComponent(ascArray[key]['taskId']) +
-            '=' + encodeURIComponent(ascArray[key]['taskName']);
-        parameters += '&taskDescription-' + encodeURIComponent(ascArray[key]['taskId']) +
-            '=' + encodeURIComponent(ascArray[key]['taskDescription']);
+        parameters +=
+            '&taskName-' + encodeURIComponent(ascArray[key]['taskId']) +
+                '=' + encodeURIComponent(ascArray[key]['taskName']);
+        parameters +=
+            '&taskDescription-' + encodeURIComponent(ascArray[key]['taskId']) +
+                '=' + encodeURIComponent(ascArray[key]['taskDescription']);
     }
     return parameters;
 }
@@ -635,4 +637,67 @@ function convertMSDateToDate(msDate)
     var timeMs = parseInt(/\/Date\((\d*)\)\//.exec(msDate)[1]);
     timeMs += new Date().getTimezoneOffset() * 60 * 1000;
     return new Date(timeMs);
+}
+
+/**
+ * Simply takes a myWork.list from json, and converts the timestamps to
+ * javascript date objects.
+ *
+ * @param json
+ * @returns {*}
+ */
+function mapJsonWorkList(json)
+{
+    for (var i = 0; i < json.list.length; i++)
+    {
+        json.list[i].weekStart = new Date(json.list[i].weekStart);
+        json.list[i].weekEnd = new Date(json.list[i].weekEnd);
+    }
+
+    return json;
+}
+
+/**
+ * Simply converts the myWork.list javascript date objects to timestamps, and
+ * returns a new stringified json object, to be submitted as a parameter to
+ * the server.
+ *
+ * @returns {*}
+ */
+function mapWorkListToJson()
+{
+    var newWork = [];
+    for (var i = 0; i < myWork.list.length; i++)
+    {
+        var item = {};
+        item.weekStart = myWork.list[i].weekStart.getTime();
+        item.weekEnd = myWork.list[i].weekEnd.getTime();
+
+        for (var key in myWork.list[i])
+        {
+            if (key != 'weekStart' && key != 'weekEnd' && key != 'work')
+            {
+                item[key] = myWork.list[i][key];
+            }
+        }
+        newWork.push(item);
+    }
+
+    return JSON.stringify({list: newWork});
+}
+
+function sampleWorkPost()
+{
+    jQuery.ajax(
+        {
+            url: 'http://localhost:8080/fasttime/rest/work/post',
+            data: mapWorkListToJson(),
+            type: 'POST',
+            contentType: 'application/json',
+            success: function (page, status, jqXHR)
+            {
+                log('response: %o', page);
+            }
+        }
+    );
 }
