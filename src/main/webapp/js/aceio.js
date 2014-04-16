@@ -20,25 +20,25 @@ function getRowParams(newWorkItem)
 {
     var workRowUrl =
         'statusId=' +
-            encodeURI(newWorkItem.approvalStatusId) +
+            encodeURIComponent(newWorkItem.approvalStatusId) +
             '&statusName=' +
-            encodeURI(newWorkItem.approvalStatusName) +
+            encodeURIComponent(newWorkItem.approvalStatusName) +
             '&weekStart=' +
             newWorkItem.weekStart.getTime() +
             '&projectId=' +
-            encodeURI(newWorkItem.projectId) +
+            encodeURIComponent(newWorkItem.projectId) +
             '&projectName=' +
-            encodeURI(newWorkItem.projectName) +
+            encodeURIComponent(newWorkItem.projectName) +
             '&taskId=' +
-            encodeURI(newWorkItem.taskId) +
+            encodeURIComponent(newWorkItem.taskId) +
             '&taskName=' +
-            encodeURI(newWorkItem.taskName) +
+            encodeURIComponent(newWorkItem.taskName) +
             '&timeSheetLineId=' +
-            encodeURI(newWorkItem.timeSheetLineId) +
+            encodeURIComponent(newWorkItem.timeSheetLineId) +
             '&comment=' +
-            encodeURI(newWorkItem.comment) +
+            encodeURIComponent(newWorkItem.comment) +
             '&total=' +
-            encodeURI(newWorkItem.work.total);
+            encodeURIComponent(newWorkItem.work.total);
 
     workRowUrl += '&sun=' + newWorkItem.work.sun;
     workRowUrl += '&mon=' + newWorkItem.work.mon;
@@ -275,6 +275,8 @@ var myWork = {
                     }
                     tableData += getRowParams(myWork.list[i]);
                 }
+/*                tableData += '&json=' + encodeURIComponent(
+                    JSON.stringify(myWork.list, null, " "));*/
 
                 log('tableData: %s', tableData);
 
@@ -619,11 +621,11 @@ function tasksToParameters(ascArray)
             continue;
         }
         parameters += '&';
-        parameters += 'taskId=' + encodeURI(ascArray[key]['taskId']);
-        parameters += '&taskName-' + encodeURI(ascArray[key]['taskId']) +
-            '=' + encodeURI(ascArray[key]['taskName']);
-        parameters += '&taskDescription-' + encodeURI(ascArray[key]['taskId']) +
-            '=' + encodeURI(ascArray[key]['taskDescription']);
+        parameters += 'taskId=' + encodeURIComponent(ascArray[key]['taskId']);
+        parameters += '&taskName-' + encodeURIComponent(ascArray[key]['taskId']) +
+            '=' + encodeURIComponent(ascArray[key]['taskName']);
+        parameters += '&taskDescription-' + encodeURIComponent(ascArray[key]['taskId']) +
+            '=' + encodeURIComponent(ascArray[key]['taskDescription']);
     }
     return parameters;
 }
