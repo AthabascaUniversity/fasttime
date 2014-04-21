@@ -38,4 +38,12 @@ public class WorkList
     {
         this.list = list;
     }
+
+    @Override
+    public String toString()
+    {
+        return "WorkList{" +
+            "list=" + list +
+            '}';
+    }
 }

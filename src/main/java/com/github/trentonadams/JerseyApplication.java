@@ -2,6 +2,7 @@ package com.github.trentonadams;
 
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.server.ResourceConfig;
+import org.glassfish.jersey.server.mvc.MvcFeature;
 
 /**
  * Created by IntelliJ IDEA.
@@ -14,11 +15,12 @@ import org.glassfish.jersey.server.ResourceConfig;
  *
  * @author Trenton D. Adams
  */
-public class MyRESTExampleApplication extends ResourceConfig
+public class JerseyApplication extends ResourceConfig
 {
-    public MyRESTExampleApplication()
+    public JerseyApplication()
     {
-        packages("com.github.trentonadams");
+        property(MvcFeature.TEMPLATE_BASE_PATH, "/");
         register(JacksonFeature.class);
+        register(MvcFeature.class);
     }
 }

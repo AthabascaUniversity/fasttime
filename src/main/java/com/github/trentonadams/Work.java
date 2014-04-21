@@ -1,8 +1,14 @@
 package com.github.trentonadams;
 
+import org.glassfish.jersey.server.mvc.Template;
+import org.glassfish.jersey.server.mvc.Viewable;
+
+import javax.swing.text.View;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -37,10 +43,23 @@ public class Work
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_HTML)
+    @Template(name = "work-table-test")
     @Path("/post")
-    public Response showWork(final WorkList workList)
+    public WorkList showWork(final WorkList workList)
     {
         System.out.println(workList);
-        return Response.ok(Boolean.TRUE).build();
+        return workList;
+    }
+
+    @GET
+    @Produces(MediaType.TEXT_HTML)
+    @Template(name = "work-table-test")
+    @Path("/get")
+    public Response testWork()
+    {
+        final WorkList workList1 = new WorkList();
+        return Response.ok(new Viewable("work-table-test.jsp", workList1))
+            .build();
     }
 }

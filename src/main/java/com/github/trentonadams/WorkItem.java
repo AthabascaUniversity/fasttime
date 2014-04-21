@@ -153,4 +153,22 @@ public class WorkItem
     {
         this.comment = comment;
     }
+
+    @Override
+    public String toString()
+    {
+        return "WorkItem{" +
+            "weekStart=" + weekStart +
+            ", weekEnd=" + weekEnd +
+            ", approvalStatusId=" + approvalStatusId +
+            ", approvalStatusName='" + approvalStatusName + '\'' +
+            ", projectId=" + projectId +
+            ", projectName='" + projectName + '\'' +
+            ", taskId=" + taskId +
+            ", taskName='" + taskName + '\'' +
+            ", timeSheetLineId=" + timeSheetLineId +
+            ", timeSheetPeriodId=" + timeSheetPeriodId +
+            ", comment='" + comment + '\'' +
+            '}';
+    }
 }
