@@ -7,6 +7,7 @@ var aceGetMyWeeksUrl;
 var aceGetWeeksUrl;
 var aceCreateWeekUrl;
 var aceSaveWorkItemUrl;
+var aceSaveItemHoursUrl;
 var aceGetWorkItemsUrl;
 var aceLoginUrl;
 var aceGetProjectsUrl;
@@ -15,6 +16,20 @@ var aceGetTaskssUrl;
 var guid;
 
 var workItemCount = 0;
+
+// if we are to refocus after reloading a section of the page.
+var focusElement;
+
+var weekMap =
+{
+    sun: 1,
+    mon: 2,
+    tue: 3,
+    wed: 4,
+    thu: 5,
+    fri: 6,
+    sat: 7
+};
 
 function getRowParams(newWorkItem)
 {
@@ -178,6 +193,8 @@ var myWork = {
      */
     loadWeeks: function loadMyWeeks()
     {
+        focusElement = '#' + jQuery(document.activeElement).attr('id');
+        log('focusElement: %s', focusElement);
         jQuery.ajax({
             url: aceGetMyWeeksUrl,
             data: 'guid=' + guid,

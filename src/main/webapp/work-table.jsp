@@ -57,13 +57,21 @@ transform this into a web service. --%>
     <td>${statusName}</td>
     <td>${projectName}</td>
     <td>${taskName}</td>
-    <td>${sun}</td>
-    <td>${mon}</td>
-    <td>${tue}</td>
-    <td>${wed}</td>
-    <td>${thu}</td>
-    <td>${fri}</td>
-    <td>${sat}</td>
+    <c:set var="index" value="${timeSheetLineId}"/>
+    <td><input name="sun-${timeSheetLineId}-${sun}" id="sun-${timeSheetLineId}"
+               value="${sun}" size="2" width="2"/></td>
+    <td><input name="mon-${timeSheetLineId}-${mon}" id="mon-${timeSheetLineId}"
+               value="${mon}" size="2" width="2"/></td>
+    <td><input name="tue-${timeSheetLineId}-${tue}" id="tue-${timeSheetLineId}"
+               value="${tue}" size="2" width="2"/></td>
+    <td><input name="wed-${timeSheetLineId}-${wed}" id="wed-${timeSheetLineId}"
+               value="${wed}" size="2" width="2"/></td>
+    <td><input name="thu-${timeSheetLineId}-${thu}" id="thu-${timeSheetLineId}"
+               value="${thu}" size="2" width="2"/></td>
+    <td><input name="fri-${timeSheetLineId}-${fri}" id="fri-${timeSheetLineId}"
+               value="${fri}" size="2" width="2"/></td>
+    <td><input name="sat-${timeSheetLineId}-${sat}" id="sat-${timeSheetLineId}"
+               value="${sat}" size="2" width="2"/></td>
     <td>
       <div id="comments-displayed-${timeSheetLineId}" style="display: inline;">
           ${comment}
@@ -77,8 +85,44 @@ transform this into a web service. --%>
 
       <script type="text/javascript">
         /*      <![CDATA[ */
+        function aceSaveHours(day, timeSheetLineId, hours)
+        {
+
+          jQuery.ajax({
+            url: aceSaveItemHoursUrl,
+            data: 'guid=' + guid + '&day=' + day +
+              '&timesheetlineid=' + timeSheetLineId + '&nbhours=' + hours,
+            success: function (page, status, jqXHR)
+            {
+              log('save hours results: %o', page);
+              myWork.loadWeeks();
+              $('#comments').val('');
+            }
+          });
+        }
+
         jQuery(document).ready(function ()
         {
+          jQuery('input[id^=sun],input[id^=mon],input[id^=tue],input[id^=wed],input[id^=thu],input[id^=fri],input[id^=sat]').unbind('focusout.hours').bind('focusout.hours',
+            function (event)
+            {
+              var name = $(this).attr('name');
+              var hours = $(this).val();
+              var day;
+              var timeSheetLineId;
+              name = name.split('-');
+              day = weekMap[name[0]];
+              timeSheetLineId = name[1];
+              if (name[2] != hours)
+              {
+                log('saving %s, name: %o, day: %s, hours: %s, lineid: %s',
+                  $(this).attr('id'), name, day, hours, timeSheetLineId);
+
+                aceSaveHours(day, timeSheetLineId, hours);
+              }
+              event.preventDefault();
+            });
+
           jQuery('#comments-displayed-${timeSheetLineId}').unbind('click.comment').bind('click.comment',
             function (event)
             {

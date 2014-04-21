@@ -123,6 +123,12 @@ jQuery(document).ready(function ()
             log('begin ajaxStop ' + new Date().getTime());
             loadingDiv.hide();
             loadingDiv.stop();
+            if (focusElement !== undefined)
+            {
+                log('focusing element %o', focusElement);
+                jQuery(focusElement).focus();
+                focusElement = undefined;
+            }
             log('end ajaxStop ' + new Date().getTime());
         });
     }

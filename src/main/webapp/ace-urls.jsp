@@ -18,8 +18,9 @@
   request.setAttribute("dateTo", dateTo);
 %>
 
+<c:set var="aceUrl" value="https://api.aceproject.com/"/>
 
-<c:url var="aceGetMyWeeks" value="https://api.aceproject.com/">
+<c:url var="aceGetMyWeeks" value="${aceUrl}">
   <c:param name="fct" value="getmyweeks"/>
   <c:param name="format" value="JSON"/>
   <c:param name="approvalstatus" value="0"/>
@@ -29,17 +30,17 @@
   </c:param>
 </c:url>
 
-<c:url var="aceGetWeeks" value="https://api.aceproject.com/">
+<c:url var="aceGetWeeks" value="${aceUrl}">
   <c:param name="fct" value="getweeks"/>
   <c:param name="format" value="JSON"/>
 </c:url>
 
-<c:url var="aceCreateWeek" value="https://api.aceproject.com/">
+<c:url var="aceCreateWeek" value="${aceUrl}">
   <c:param name="fct" value="createweek"/>
   <c:param name="format" value="JSON"/>
 </c:url>
 
-<c:url var="aceGetWorkItems" value="https://api.aceproject.com/">
+<c:url var="aceGetWorkItems" value="${aceUrl}">
   <c:param name="fct" value="getmyworkitems"/>
   <c:param name="format" value="JSON"/>
   <c:param name="approvalstatus" value="0"/>
@@ -53,13 +54,13 @@
   </c:param>
 </c:url>
 
-<c:url var="aceLogin" value="https://api.aceproject.com/">
+<c:url var="aceLogin" value="${aceUrl}">
   <c:param name="fct" value="login"/>
   <c:param name="accountid" value="athabascau"/>
   <c:param name="format" value="JSON"/>
 </c:url>
 
-<c:url var="aceGetProjects" value="https://api.aceproject.com/">
+<c:url var="aceGetProjects" value="${aceUrl}">
   <c:param name="fct" value="getprojects"/>
   <c:param name="accountid" value="athabascau"/>
   <c:param name="format" value="JSON"/>
@@ -68,15 +69,23 @@
   <c:param name="UseShowHide" value="true"/>
 </c:url>
 
-<c:url var="aceGetTasks" value="https://api.aceproject.com/">
+<c:url var="aceGetTasks" value="${aceUrl}">
   <c:param name="fct" value="gettasks"/>
   <c:param name="accountid" value="athabascau"/>
   <c:param name="format" value="JSON"/>
 </c:url>
 
-<c:url var="aceSaveWorkItem" value="https://api.aceproject.com/">
+<c:url var="aceSaveWorkItem" value="${aceUrl}">
   <c:param name="fct" value="saveworkitem"/>
   <c:param name="accountid" value="athabascau"/>
+  <c:param name="format" value="JSON"/>
+</c:url>
+
+<%--
+Requires dynamic parameters of day, nbhours, and timesheetlineid
+--%>
+<c:url var="aceSaveItemHours" value="${aceUrl}">
+  <c:param name="fct" value="savetimeitemhours"/>
   <c:param name="format" value="JSON"/>
 </c:url>
 
@@ -89,6 +98,7 @@
   aceGetMyWeeksUrl = '${aceGetMyWeeks}';
   aceCreateWeekUrl = '${aceCreateWeek}';
   aceSaveWorkItemUrl = '${aceSaveWorkItem}';
+  aceSaveItemHoursUrl = '${aceSaveItemHours}';
   aceGetWorkItemsUrl = '${aceGetWorkItems}';
   aceLoginUrl = '${aceLogin}';
   aceGetProjectsUrl = '${aceGetProjects}';
