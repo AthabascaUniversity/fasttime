@@ -12,6 +12,7 @@
           }, autoSize: true,
             dateFormat: "yy-mm-dd"
           });
+          jQuery('#date').datepicker("setDate", new Date());
         </ht:script>
       </td>
       <td>
