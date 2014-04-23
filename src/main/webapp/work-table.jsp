@@ -5,6 +5,22 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%-- CRITICAL supposedly query parameter order is not guaranteed.  We need to
 transform this into a web service. --%>
+<table class="debugtable border" id="time" style="display: none;">
+<tr>
+  <th>Week Start</th>
+  <th>Status</th>
+  <th>Project</th>
+  <th>Task</th>
+  <th>Sun</th>
+  <th>Mon</th>
+  <th>Tue</th>
+  <th>Wed</th>
+  <th>Thu</th>
+  <th>Fri</th>
+  <th>Sat</th>
+  <th>Notes</th>
+  <th>Total</th>
+</tr>
 <c:forEach items="${paramValues['statusId']}" var="statusId"
            varStatus="status">
   <c:set var="statusName" value="${paramValues['statusName'][status.index]}"/>
@@ -23,25 +39,6 @@ transform this into a web service. --%>
   <c:set var="fri" value="${paramValues['fri'][status.index]}"/>
   <c:set var="sat" value="${paramValues['sat'][status.index]}"/>
   <c:set var="total" value="${paramValues['total'][status.index]}"/>
-
-  <c:if test="${status.first}">
-    <table class="debugtable border" id="time">
-    <tr>
-      <th>Week Start</th>
-      <th>Status</th>
-      <th>Project</th>
-      <th>Task</th>
-      <th>Sun</th>
-      <th>Mon</th>
-      <th>Tue</th>
-      <th>Wed</th>
-      <th>Thu</th>
-      <th>Fri</th>
-      <th>Sat</th>
-      <th>Notes</th>
-      <th>Total</th>
-    </tr>
-  </c:if>
 
   <%
     final Calendar weekStart = Calendar.getInstance();
@@ -103,6 +100,7 @@ transform this into a web service. --%>
 
         jQuery(document).ready(function ()
         {
+          jQuery('#time').show(); // show if there are items to display.
           jQuery('input[id^=sun],input[id^=mon],input[id^=tue],input[id^=wed],input[id^=thu],input[id^=fri],input[id^=sat]').unbind('focusout.hours').bind('focusout.hours',
             function (event)
             {
@@ -150,7 +148,5 @@ transform this into a web service. --%>
     </td>
     <td>${total}</td>
   </tr>
-  <c:if test="${status.last}">
-    </table>
-  </c:if>
 </c:forEach>
+</table>
