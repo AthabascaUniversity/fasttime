@@ -45,6 +45,35 @@
   </table>
 </div>
 
+<div>
+  <input type="checkbox" id="day-only"/> <label for="day-only">Show today only</label>
+
+  <script type="text/javascript">
+    /*      <![CDATA[ */
+    var dayNamesShort = {0: 'sun', 1: 'mon', 2: 'tue', 3: 'wed', 4: 'thu',
+      5: 'fri', 6: 'sat'};
+    jQuery(document).ready(function ()
+    {
+      $('#day-only').unbind('click.day').bind('click.day', function(event)
+      {
+        var day = dayNamesShort[new Date().getDay()];
+        if (this.checked)
+        {
+          log('checked');
+          $('[id*=' + day + '][value=0]').parent().parent().hide();
+        }
+        else
+        {
+          log('unchecked');
+          $('[id*=' + day + '][value=0]').parent().parent().show();
+        }
+      });
+    });
+    /*      ]]> */
+  </script>
+
+</div>
+
 <script type="text/javascript">
   /*      <![CDATA[ */
   function aceSaveWork(date, projectId, taskId, hours, comments, week)
