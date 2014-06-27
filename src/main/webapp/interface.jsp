@@ -1,10 +1,9 @@
 <%@ taglib prefix="ht" tagdir="/WEB-INF/tags/ht" %>
-<div class="ui-corner-all">
+<div id="fm1" class="ui-corner-all">
   <table class="border">
     <tr>
-      <td>
-        <%--<label for="date">Date</label>--%>
-        <input type="text" id="date" name="date"/>
+      <td><label for="date">Date</label></td>
+      <td><input type="text" id="date" name="date" size="15" maxlength="15"/>
         <ht:script type="text/javascript" jquery="true" ready="true">
           $("#date").datepicker({onSelect: function ()
           {
@@ -15,30 +14,35 @@
           jQuery('#date').datepicker("setDate", new Date());
         </ht:script>
       </td>
-      <td>
-        <%--<label for="projects">Projects</label>--%>
-        <select id="projects" name="project">
-        </select>
-      </td>
-      <td>
-        <%--<label for="tasks">Tasks</label>--%>
-        <select id="tasks" name="task">
-        </select>
-      </td>
-      <td>
-        <input type="text"
-               name="hours"
-               id="hours"
-               class="input-small-list"
-               size="2"
-               autocomplete="off">
-      </td>
+    </tr>
+    <tr>
+      <td><label for="projects">Projects</label></td>
+      <td><select id="projects" name="project">
+      </select></td>
+    </tr>
+    <tr>
+      <td><label for="tasks">Tasks</label></td>
+      <td><select id="tasks" name="task">
+      </select></td>
+    </tr>
+    <tr>
+      <td><label for="hours">Hours</label></td>
+      <td><input type="text"
+             name="hours"
+             id="hours"
+             class="input-small-list"
+             size="5"
+             maxlength="5"
+             autocomplete="off"/></td>
       <%--      <td time_type_id="1">Regular&nbsp;</td>--%>
-      <td style="white-space:nowrap"> &nbsp;
-        <%--<label for="comment">Comment</label>--%>
-        <textarea name="comments" id="comments" style="width: 40em;" rows="3"></textarea>
-      </td>
-      <td>
+    </tr>
+    <tr>
+      <td><label for="comment">Comment</label></td>
+      <td><textarea name="comments" id="comments" style="width: 40em;"
+                rows="3"></textarea></td>
+    </tr>
+    <tr>
+      <td colspan="2">
         <input type="submit" id="save" value="Save"/>
       </td>
     </tr>
@@ -46,7 +50,8 @@
 </div>
 
 <div>
-  <input type="checkbox" id="day-only"/> <label for="day-only">Show today only</label>
+  <input type="checkbox" id="day-only"/> <label for="day-only">Show today
+  only</label>
 
   <script type="text/javascript">
     /*      <![CDATA[ */
@@ -54,7 +59,7 @@
       5: 'fri', 6: 'sat'};
     jQuery(document).ready(function ()
     {
-      $('#day-only').unbind('click.day').bind('click.day', function(event)
+      $('#day-only').unbind('click.day').bind('click.day', function (event)
       {
         var day = dayNamesShort[new Date().getDay()];
         if (this.checked)
@@ -79,7 +84,7 @@
   function aceSaveWork(date, projectId, taskId, hours, comments, week)
   {
     var jsDate = new Date(date);
-    var hoursDay = '&hoursday' + (jsDate.getUTCDay()+ 1) + '=' + hours;
+    var hoursDay = '&hoursday' + (jsDate.getUTCDay() + 1) + '=' + hours;
 
     jQuery.ajax({
       url: aceSaveWorkItemUrl,
