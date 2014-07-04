@@ -152,6 +152,7 @@ var projects = {
         jQuery.ajax({
             url: 'task-options.jsp',
             appendElement: '#tasks',
+            type: 'post',
             data: 'guid=' + guid + taskParameters,
             success: function (page, status, jqXHR)
             {
